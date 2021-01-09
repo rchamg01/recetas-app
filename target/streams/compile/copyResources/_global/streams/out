@@ -1,0 +1,4 @@
+[debug] Copy resource mappings: 
+[debug] 	(E:\universidad\MASTER\cloud\Usuario_App\conf\application.conf,E:\universidad\MASTER\cloud\Usuario_App\target\scala-2.13\classes\application.conf)
+[debug] 	(E:\universidad\MASTER\cloud\Usuario_App\conf\logback.xml,E:\universidad\MASTER\cloud\Usuario_App\target\scala-2.13\classes\logback.xml)
+[debug] 	(E:\universidad\MASTER\cloud\Usuario_App\conf\routes,E:\universidad\MASTER\cloud\Usuario_App\target\scala-2.13\classes\routes)
