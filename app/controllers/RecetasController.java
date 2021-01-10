@@ -3,12 +3,19 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Receta;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 import java.util.Optional;
 
 /**
@@ -111,6 +118,12 @@ public class RecetasController extends Controller {
             NodeList nombre = requestBodyXML.getElementsByTagName("nombre");
             for (int i = 0; i < nombre.getLength(); i++) {
                 String nombre_xml = requestBodyXML.getElementsByTagName("nombre").item(i).getTextContent();
+                for (int j = 0; j < Receta.listaRecetas.size(); j++) {
+                    if(Receta.listaRecetas.get(j).getNombre().equals(nombre_xml)){
+                        return Results.badRequest("La receta a añadir ya existe en la base de datos");
+                    }
+                }
+
                 r.setNombre(nombre_xml);
                 System.out.println("Nombre: "+nombre_xml);
             }
@@ -123,7 +136,13 @@ public class RecetasController extends Controller {
                 System.out.println("Ingrediente: "+ingrediente_xml);
             }
             Receta.listaRecetas.add(r);
-            return Results.ok(String.valueOf(requestBodyXML));
+
+            Result respuesta = null;
+            for (int i = 0; i < r.getListaIngredientes().size(); i++) {
+                respuesta = Results.ok(getStringFromDocument(requestBodyXML)).withHeader("nombre", r.getNombre()).withHeader("ingredientes", r.ingredientesToString());
+            }
+
+            return Results.ok(getStringFromDocument(requestBodyXML));
         }else{
             System.out.println("La receta no está escrita en formato JSON o XML");
             return Results.badRequest("La receta no está escrita en formato JSON o XML");
@@ -133,27 +152,62 @@ public class RecetasController extends Controller {
     }
 
     public Result getReceta(Http.Request request) {
-        JsonNode requestBodyJSON = request.body().asJson();
-        int indice = requestBodyJSON.path("indice").asInt();
-        System.out.println("indice: "+ indice +"   Tamaño lista: "+(Receta.listaRecetas.size()-1));
+        Optional<String> contenido = request.contentType();
 
-        if (Receta.listaRecetas.size() > indice) {
-            Receta r = Receta.listaRecetas.get(indice);
-            System.out.println(r.toString());
-            return ok(r.toString());
+        if(contenido.toString().contains("application/json")){
+            JsonNode requestBodyJSON = request.body().asJson();
+            int indice = requestBodyJSON.path("indice").asInt();
+            System.out.println("indice: "+ indice +"   Tamaño lista: "+(Receta.listaRecetas.size()-1));
+
+            if (Receta.listaRecetas.size() > indice) {
+                Receta r = Receta.listaRecetas.get(indice);
+                System.out.println(r.toString());
+                return ok(r.toString());
+
+            }else{
+                return Results.notFound("No existe ninguna receta con ese índice");
+            }
+        }else if(contenido.toString().contains("application/xml")){
+            Document requestBodyXML = request.body().asXml();
+            int indice = Integer.parseInt(requestBodyXML.getElementsByTagName("indice").item(0).getTextContent());
+            System.out.println("indice: "+ indice +"   Tamaño lista: "+(Receta.listaRecetas.size()-1));
+
+            if (Receta.listaRecetas.size() > indice) {
+                Receta r = Receta.listaRecetas.get(indice);
+                System.out.println(r.toString());
+                return ok(r.toString());
+            }else{
+                return Results.notFound("No existe ninguna receta con ese índice");
+            }
 
         }else{
-            return Results.notFound("No existe ninguna receta con ese índice");
-         }
+            System.out.println("El indice no está escrito en formato JSON o XML");
+            return Results.badRequest("El indice no está escrito en formato JSON o XML");
+        }
+
 
     }
 
     public Result deleteReceta(Http.Request request) {
-        JsonNode requestBodyJSON = request.body().asJson();
-        int indice = requestBodyJSON.path("indice").asInt();
-        Receta.listaRecetas.remove(indice); //Cuando se elimina un usuario el resto de usuarios se cambian de indice ocupando el hueco
-        System.out.println("Usuario " + indice + " eliminado");
-        return ok("Usuario " + indice + " eliminado");
+        Optional<String> contenido = request.contentType();
+
+        if(contenido.toString().contains("application/json")){
+            JsonNode requestBodyJSON = request.body().asJson();
+            int indice = requestBodyJSON.path("indice").asInt();
+            Receta.listaRecetas.remove(indice); //Cuando se elimina un usuario el resto de usuarios se cambian de indice ocupando el hueco
+            System.out.println("Usuario " + indice + " eliminado");
+            return ok("Usuario " + indice + " eliminado");
+        }else if(contenido.toString().contains("application/xml")) {
+            Document requestBodyXML = request.body().asXml();
+            int indice = Integer.parseInt(requestBodyXML.getElementsByTagName("indice").item(0).getTextContent());
+            Receta.listaRecetas.remove(indice); //Cuando se elimina un usuario el resto de usuarios se cambian de indice ocupando el hueco
+            System.out.println("Usuario " + indice + " eliminado");
+            return ok("Usuario " + indice + " eliminado");
+        }else{
+            System.out.println("El indice no está escrito en formato JSON o XML");
+            return Results.badRequest("El indice no está escrito en formato JSON o XML");
+        }
+
     }
 
     public Result updateReceta(Http.Request request) {
@@ -178,6 +232,25 @@ public class RecetasController extends Controller {
             return ok("Lista de recetas:\n" + listado);
         } else {
             return Results.notFound("No hay ninguna receta añadida");
+        }
+    }
+
+    public String getStringFromDocument(Document doc)
+    {
+        try
+        {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            return writer.toString();
+        }
+        catch(TransformerException ex)
+        {
+            ex.printStackTrace();
+            return null;
         }
     }
 

@@ -1,4 +1,4 @@
 [debug] "not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/E:/universidad/MASTER/cloud/Recetas_App/project/"), "recetas_app-build")...
-[debug] Done updating ProjectRef(uri("file:/E:/universidad/MASTER/cloud/Recetas_App/project/"), "recetas_app-build")
+[debug] Updating ProjectRef(uri("file:/E:/universidad/MASTER/cloud/recetas-app/project/"), "recetas-app-build")...
+[debug] Done updating ProjectRef(uri("file:/E:/universidad/MASTER/cloud/recetas-app/project/"), "recetas-app-build")
 [warn] There may be incompatibilities among your library dependencies; run 'evicted' to see detailed eviction warnings.
