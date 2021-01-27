@@ -66,6 +66,8 @@ public class RecetasController extends Controller {
             //HELPFUL EXAMPLE: https://mkyong.com/java/jackson-tree-model-example/
             for (JsonNode root : requestBodyJSON) {
                 String nombre = root.path("nombre").asText();
+                int tiempo = root.path("tiempo").asInt();
+                //para saber si esta repetida la receta
                 for (int i = 0; i < Receta.listaRecetas.size(); i++) {
                     if(Receta.listaRecetas.get(i).getNombre().equals(nombre)){
                         return Results.badRequest("La receta a añadir ya existe en la base de datos");
@@ -73,6 +75,8 @@ public class RecetasController extends Controller {
                 }
                 System.out.println("Nombre receta : " + nombre);
                 r.setNombre(nombre);
+                System.out.println("Tiempo de preparación (min): " + tiempo);
+                r.setTiempoPreparacion(tiempo);
                 // Get Name
            /* JsonNode nameNode = root.path("name");
             if (!nameNode.isMissingNode()) {        // if "name" node is exist
@@ -92,9 +96,10 @@ public class RecetasController extends Controller {
             //ObjectNode node = Json.newObject();
             //node.put("success", false);
             //node.put("message", "El usuario ha sido creado");
+
             Result respuesta = null;
             for (int i = 0; i < r.getListaIngredientes().size(); i++) {
-                respuesta = Results.ok(requestBodyJSON).withHeader("nombre", r.getNombre()).withHeader("ingredientes", r.ingredientesToString());
+                respuesta = Results.ok(requestBodyJSON).withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
             }
             return respuesta;
         }
@@ -128,6 +133,10 @@ public class RecetasController extends Controller {
                 System.out.println("Nombre: "+nombre_xml);
             }
 
+            NodeList tiempo = requestBodyXML.getElementsByTagName("tiempo");
+            String tiempo_xml = requestBodyXML.getElementsByTagName("tiempo").item(0).getTextContent();
+            r.setTiempoPreparacion(Integer.parseInt(tiempo_xml));
+            System.out.println("Tiempo (min): "+tiempo_xml);
 
             NodeList ingredientes = requestBodyXML.getElementsByTagName("ingrediente");
             for (int i = 0; i < ingredientes.getLength(); i++) {
@@ -138,11 +147,13 @@ public class RecetasController extends Controller {
             Receta.listaRecetas.add(r);
 
             Result respuesta = null;
-            for (int i = 0; i < r.getListaIngredientes().size(); i++) {
-                respuesta = Results.ok(getStringFromDocument(requestBodyXML)).withHeader("nombre", r.getNombre()).withHeader("ingredientes", r.ingredientesToString());
-            }
+            String res ="(\"success\": true, \"message\": \"El usuario ha sido añadido\")";
 
-            return Results.ok(getStringFromDocument(requestBodyXML));
+            for (int i = 0; i < r.getListaIngredientes().size(); i++) {
+                respuesta = Results.ok(res).withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
+            }
+            return respuesta;
+
         }else{
             System.out.println("La receta no está escrita en formato JSON o XML");
             return Results.badRequest("La receta no está escrita en formato JSON o XML");

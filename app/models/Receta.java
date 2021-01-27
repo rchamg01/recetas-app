@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Receta {
     private String nombre;
     private String ingrediente;
+    private int tiempoPreparacion; //en segundos
     private ArrayList<String> listaIngredientes = new ArrayList<>();
     static public ArrayList<Receta> listaRecetas = new ArrayList<>();
 
@@ -24,6 +25,14 @@ public class Receta {
         this.nombre = nombre;
     }
 
+    public int getTiempoPreparacion() {
+        return tiempoPreparacion;
+    }
+
+    public void setTiempoPreparacion(int tiempoPreparacion) {
+        this.tiempoPreparacion = tiempoPreparacion;
+    }
+
     public void setIngrediente(String ingrediente) {
         this.ingrediente = ingrediente;
     }
@@ -41,7 +50,7 @@ public class Receta {
     }
 
     public String toString(){
-        String receta = "Nombre: " + nombre + "\nIngredientes: ";
+        String receta = "Nombre: " + nombre + "\nTiempo (min): "+tiempoPreparacion+"\nIngredientes: ";
         for (int i = 0; i < listaIngredientes.size(); i++) {
             receta = receta.concat("\n"+getIngrediente(i));
         }
