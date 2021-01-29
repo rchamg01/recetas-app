@@ -1,15 +1,47 @@
 package models;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.ebean.Finder;
+import io.ebean.Model;
+import play.data.validation.Constraints;
 
-public class Receta {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Receta extends Model {
+
+    @Id
+    long id;
+
+    @Constraints.Required
     private String nombre;
     private String ingrediente;
     private int tiempoPreparacion; //en segundos
+
+    public static final Finder<Long, Receta> find = new Finder<>(Receta.class);
+
     private ArrayList<String> listaIngredientes = new ArrayList<>();
     static public ArrayList<Receta> listaRecetas = new ArrayList<>();
 
     public Receta() {}
+
+    public static Receta findById(long id) {
+        return find.byId(id);
+    }
+
+    //el valor del nombre es unico por lo que solo devuelve una receta
+    public static Receta findByName(String nombre) {
+        return find.query().where().contains("nombre", nombre).findOne();
+    }
+
+    //aqui se usa lista porque probablemente aparezcan varias recetas con ese tiempo
+    public static List<Receta> findByTime(int tiempo) {
+        return null;
+    }
+
 
     public String getIngrediente(int index) {
         return this.listaIngredientes.get(index);

@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Sat Jan 09 21:34:32 CET 2021
+// @DATE:Thu Jan 28 18:57:09 CET 2021
 
 import play.api.routing.JavaScriptReverseRoute
 

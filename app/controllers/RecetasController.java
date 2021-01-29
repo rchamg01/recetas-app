@@ -1,21 +1,32 @@
 package controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Receta;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import play.data.Form;
+import play.data.FormFactory;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import javax.inject.Inject;
+import javax.swing.text.AbstractDocument;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,22 +35,26 @@ import java.util.Optional;
  */
 public class RecetasController extends Controller {
 
+    @Inject
+    FormFactory formFactory;
+
     public Result create(Http.Request request) {
 
-        ///////////////////////////////////////
-        /*Form<Usuario> form = formFactory.form(Usuario.class).bindFromRequest(request);
+        /////////////////form solo vale para json//////////////////////
+        Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
+
 
         if(form.hasErrors()){
-
+            System.out.println(form.errorsAsJson());
         } else {
-            Usuario r = form.get();
+            Receta r = form.get();
             System.out.println(r.getNombre());
-            System.out.println(r.getEdad());
+            System.out.println(r.getTiempoPreparacion());
         }
         //Map<String>
         //System.out.println(form.rawData());
         ///////////////////////////////////////
-        */
+
 
         //String bodyTXT = request.body().asText(); //para pedirlo como texto
         //Document requestBodyXML = request.body().asXml(); //para pedirlo en xml
@@ -147,16 +162,61 @@ public class RecetasController extends Controller {
             Receta.listaRecetas.add(r);
 
             Result respuesta = null;
-            String res ="(\"success\": true, \"message\": \"El usuario ha sido añadido\")";
+
+            //String res ="{\"success\": true, \"message\": \"El usuario ha sido añadido\"}"; //forma rudimentara e incorrecta de crear una respuesta json
+
+            /*ObjectNode node = Json.newObject(); // {} forma mas adecuada de crear un objeto json de respuesta
+            node.put("success", true);
+            node.put("message", "La receta ha sido añadida");*/
+
+            /*EJemplo de arry con json
+            ArrayNode arr = Json.newArray();
+            arr.add(1);
+            arr.add(2);
+            node.put("numbers", arr);*/
+
+            /*RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //mejor forma
+            res.setMessage("La receta ha sido creada");
+            res.setSuccess(true);
+            JsonNode json = Json.toJson(res);
+
+            Receta rec = new Receta();
+            rec.setNombre("cocido");
+            rec.setTiempoPreparacion(45);
+            rec.addIngrediente("garbanzos");
+
+            Receta rec2 = new Receta();
+            rec2.setNombre("cocido");
+            rec2.setTiempoPreparacion(45);
+            rec2.addIngrediente("garbanzos");
+
+            List<Receta> recets = new ArrayList<>();
+            recets.add(rec);
+            recets.add(rec2);
+
+            //Content content = recetas.render(recets);
+            //Content content = receta.render(rec);
+
+            //content = views.xml.usuario.render();
+
+            ////mejor manera////
+            if(request.accepts("application/xml")){
+                //Content content = recetas.render(recets);
+                //return ok(content);
+            }else if (request.accepts("application/json")){
+                ObjectNode result = Json.newObject();
+                return ok(result);
+            }else{
+                return status(406);
+            }*/
 
             for (int i = 0; i < r.getListaIngredientes().size(); i++) {
-                respuesta = Results.ok(res).withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
+                respuesta = Results.ok().withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
             }
             return respuesta;
 
-        }else{
-            System.out.println("La receta no está escrita en formato JSON o XML");
-            return Results.badRequest("La receta no está escrita en formato JSON o XML");
+        }else{ //si no esta ni en json ni en xml
+            return status(406);
         }
 
 
@@ -265,4 +325,28 @@ public class RecetasController extends Controller {
         }
     }
 
+}
+
+class RespuestaCreacionUsuario {
+    //@JsonProperty("is_success") //para que aparezca otro nombre  en ve de success
+    private boolean success;
+
+    //@JsonIgnore para ignorar atributos
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }
