@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Ingrediente;
 import models.Receta;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,6 +17,9 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
+import play.twirl.api.Content;
+import views.xml.receta;
+import views.xml.recetas;
 
 import javax.inject.Inject;
 import javax.swing.text.AbstractDocument;
@@ -40,42 +44,69 @@ public class RecetasController extends Controller {
 
     public Result create(Http.Request request) {
 
-        /////////////////form solo vale para json//////////////////////
-        Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
-
-
-        if(form.hasErrors()){
-            System.out.println(form.errorsAsJson());
-        } else {
-            Receta r = form.get();
-            System.out.println(r.getNombre());
-            System.out.println(r.getTiempoPreparacion());
-        }
-        //Map<String>
-        //System.out.println(form.rawData());
-        ///////////////////////////////////////
-
-
-        //String bodyTXT = request.body().asText(); //para pedirlo como texto
-        //Document requestBodyXML = request.body().asXml(); //para pedirlo en xml
-
         Optional<String> contenido = request.contentType();
         /* ----JSON------
         [
             {
                 "nombre": "Cocido de garbanzos",
+                "tiempo": "45",
                 "ingredientes": [
-                    {"ingrediente": "garbanzos"},
-                    {"ingrediente": "carne"},
-                    {"ingrediente": "patata"},
-                    {"ingrediente": "zanahoria"}
+                    {"nombre": "garbanzos"},
+                    {"nombre": "carne"},
+                    {"nombre": "patata"},
+                    {"nombre": "zanahoria"}
                 ]
             }
         ]
         */
         if(contenido.toString().contains("application/json")){
             System.out.println("Receta escrita en JSON");
-            JsonNode requestBodyJSON = request.body().asJson(); //para pedirlo en formato json
+            /////////////////form solo vale para json//////////////////////
+            Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
+
+            System.out.println(form.rawData());
+
+            if(form.hasErrors()){
+                return Results.badRequest(form.errorsAsJson());
+            } else {
+
+                Receta rAux = form.get(); //se crea una receta donde se recoge los datos de la request
+                List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
+
+                //System.out.println("numero ingredientes: "+rAux.getListaIngredients().size());
+
+                //System.out.println(rAux.getListaIngredients());
+
+                Receta rf = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
+
+                //se añaden los atributos "unicos" al objeto vacio
+                rf.setNombre(rAux.getNombre());
+                System.out.println("nombre rec: "+ rf.getNombre());
+                rf.setTiempo(rAux.getTiempo());
+                System.out.println("tiempo: "+ rf.getTiempo());
+                rf.setTipo(rAux.getTipo());
+                System.out.println("tipo: "+ rf.getTipo());
+
+
+                rf.save(); //se guarda la receta en la base de datos
+
+
+
+                ///////////YA NO VALE///////////////////////////////////
+               /* Receta r = form.get();
+                System.out.println("Nombre: " +r.getNombre());
+                System.out.println("Tiempo: " + r.getTiempoPreparacion());
+                System.out.println("ingredientes");
+                for (int i = 0; i< r.getListaIngredientes().size(); i++){
+                    System.out.println(r.getIngrediente(i));
+                }*/
+               // System.out.println(r.toString());
+            }
+
+            return Results.ok();
+
+
+            /*JsonNode requestBodyJSON = request.body().asJson(); //para pedirlo en formato json
             System.out.println(contenido);
             Receta r = new Receta();
             //HELPFUL EXAMPLE: https://mkyong.com/java/jackson-tree-model-example/
@@ -91,7 +122,7 @@ public class RecetasController extends Controller {
                 System.out.println("Nombre receta : " + nombre);
                 r.setNombre(nombre);
                 System.out.println("Tiempo de preparación (min): " + tiempo);
-                r.setTiempoPreparacion(tiempo);
+                r.setTiempoPreparacion(tiempo);*/
                 // Get Name
            /* JsonNode nameNode = root.path("name");
             if (!nameNode.isMissingNode()) {        // if "name" node is exist
@@ -99,7 +130,7 @@ public class RecetasController extends Controller {
                 System.out.println("middleName : " + nameNode.path("middle").asText());
                 System.out.println("lastName : " + nameNode.path("last").asText());
             }*/
-                JsonNode ingredienteNode = root.path("ingredientes");
+                /*JsonNode ingredienteNode = root.path("ingredientes");
                 for (JsonNode node : ingredienteNode) {
                     String ingrediente = node.path("ingrediente").asText();
                     r.addIngrediente(ingrediente);
@@ -116,7 +147,7 @@ public class RecetasController extends Controller {
             for (int i = 0; i < r.getListaIngredientes().size(); i++) {
                 respuesta = Results.ok(requestBodyJSON).withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
             }
-            return respuesta;
+            return respuesta;*/
         }
 
         /*
@@ -150,22 +181,24 @@ public class RecetasController extends Controller {
 
             NodeList tiempo = requestBodyXML.getElementsByTagName("tiempo");
             String tiempo_xml = requestBodyXML.getElementsByTagName("tiempo").item(0).getTextContent();
-            r.setTiempoPreparacion(Integer.parseInt(tiempo_xml));
+           // r.setTiempoPreparacion(Integer.parseInt(tiempo_xml));
             System.out.println("Tiempo (min): "+tiempo_xml);
 
             NodeList ingredientes = requestBodyXML.getElementsByTagName("ingrediente");
             for (int i = 0; i < ingredientes.getLength(); i++) {
                 String ingrediente_xml = requestBodyXML.getElementsByTagName("ingrediente").item(i).getTextContent();
-                r.addIngrediente(ingrediente_xml);
+                //r.addIngrediente(ingrediente_xml);
                 System.out.println("Ingrediente: "+ingrediente_xml);
             }
             Receta.listaRecetas.add(r);
 
             Result respuesta = null;
 
+            //Content content = recetas.render(Receta.listaRecetas); YA FUNCIONA (PARECE)
+
             //String res ="{\"success\": true, \"message\": \"El usuario ha sido añadido\"}"; //forma rudimentara e incorrecta de crear una respuesta json
 
-            /*ObjectNode node = Json.newObject(); // {} forma mas adecuada de crear un objeto json de respuesta
+            /*ObjectNode node = Json.newObject(); // {} forma adecuada pero no mejor de crear un objeto json de respuesta
             node.put("success", true);
             node.put("message", "La receta ha sido añadida");*/
 
@@ -175,12 +208,7 @@ public class RecetasController extends Controller {
             arr.add(2);
             node.put("numbers", arr);*/
 
-            /*RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //mejor forma
-            res.setMessage("La receta ha sido creada");
-            res.setSuccess(true);
-            JsonNode json = Json.toJson(res);
-
-            Receta rec = new Receta();
+            /*Receta rec = new Receta();
             rec.setNombre("cocido");
             rec.setTiempoPreparacion(45);
             rec.addIngrediente("garbanzos");
@@ -198,22 +226,29 @@ public class RecetasController extends Controller {
             //Content content = receta.render(rec);
 
             //content = views.xml.usuario.render();
+            */
+
+            RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //mejor forma
+            res.setMessage("La receta ha sido creada");
+            res.setSuccess(true);
+            JsonNode json = Json.toJson(res);
 
             ////mejor manera////
-            if(request.accepts("application/xml")){
-                //Content content = recetas.render(recets);
-                //return ok(content);
+           /* if(request.accepts("application/xml")){
+                Content content = receta.render(r);
+                return ok(content);
             }else if (request.accepts("application/json")){
-                ObjectNode result = Json.newObject();
-                return ok(result);
+                //ObjectNode result = Json.newObject();
+                return ok(json);
             }else{
                 return status(406);
             }*/
 
-            for (int i = 0; i < r.getListaIngredientes().size(); i++) {
+            /*for (int i = 0; i < r.getListaIngredientes().size(); i++) {
                 respuesta = Results.ok().withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
             }
-            return respuesta;
+            return respuesta;*/
+            return Results.ok();
 
         }else{ //si no esta ni en json ni en xml
             return status(406);
@@ -253,34 +288,51 @@ public class RecetasController extends Controller {
 
         }else{
             System.out.println("El indice no está escrito en formato JSON o XML");
-            return Results.badRequest("El indice no está escrito en formato JSON o XML");
+            return Results.status(415); //Unsupported Media Type
         }
 
 
     }
 
+    //delete receta por ID FUNCIONA!!
     public Result deleteReceta(Http.Request request) {
+
         Optional<String> contenido = request.contentType();
 
         if(contenido.toString().contains("application/json")){
             JsonNode requestBodyJSON = request.body().asJson();
-            int indice = requestBodyJSON.path("indice").asInt();
-            Receta.listaRecetas.remove(indice); //Cuando se elimina un usuario el resto de usuarios se cambian de indice ocupando el hueco
-            System.out.println("Usuario " + indice + " eliminado");
-            return ok("Usuario " + indice + " eliminado");
+            long id = requestBodyJSON.path("id").asLong();
+
+            Receta receta = Receta.findById(id);
+            //Receta.listaRecetas.remove(id);
+
+            if (receta == null) { //si no existe (la busqueda devolvio null)
+                return Results.status(404); //not found
+            }
+            System.out.println("Receta " + id + " eliminada");
+            receta.delete();
+            return Results.ok();
+
         }else if(contenido.toString().contains("application/xml")) {
             Document requestBodyXML = request.body().asXml();
-            int indice = Integer.parseInt(requestBodyXML.getElementsByTagName("indice").item(0).getTextContent());
-            Receta.listaRecetas.remove(indice); //Cuando se elimina un usuario el resto de usuarios se cambian de indice ocupando el hueco
-            System.out.println("Usuario " + indice + " eliminado");
-            return ok("Usuario " + indice + " eliminado");
+            long id = Long.parseLong(requestBodyXML.getElementsByTagName("id").item(0).getTextContent());
+            Receta receta = Receta.findById(id);
+            //Receta.listaRecetas.remove(id);
+
+            if (receta == null) { //si no existe (la busqueda devolvio null)
+                return Results.status(404);
+            }
+            System.out.println("Receta " + id + " eliminada");
+            receta.delete();
+            return Results.ok();
+
         }else{
             System.out.println("El indice no está escrito en formato JSON o XML");
-            return Results.badRequest("El indice no está escrito en formato JSON o XML");
+            return Results.status(415); //Unsupported Media Type
         }
 
     }
-
+    //no vale
     public Result updateReceta(Http.Request request) {
         JsonNode requestBodyJSON = request.body().asJson();
         int indice = requestBodyJSON.path("indice").asInt();
@@ -328,7 +380,7 @@ public class RecetasController extends Controller {
 }
 
 class RespuestaCreacionUsuario {
-    //@JsonProperty("is_success") //para que aparezca otro nombre  en ve de success
+    //@JsonProperty("is_success") //para que aparezca otro nombre en vez de success
     private boolean success;
 
     //@JsonIgnore para ignorar atributos

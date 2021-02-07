@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Thu Jan 28 18:57:09 CET 2021
+// @DATE:Sun Feb 07 13:20:56 CET 2021
 
 import play.api.routing.JavaScriptReverseRoute
 
@@ -19,7 +19,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:10
+    // @LINE:12
     def updateReceta: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.updateReceta",
       """
@@ -29,7 +29,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:11
+    // @LINE:13
     def deleteReceta: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.deleteReceta",
       """
@@ -59,7 +59,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:9
+    // @LINE:11
     def getListaRecetas: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.getListaRecetas",
       """
@@ -71,7 +71,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:14
+  // @LINE:17
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -79,7 +79,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:14
+    // @LINE:17
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """

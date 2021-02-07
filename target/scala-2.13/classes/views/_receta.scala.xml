@@ -1,5 +1,0 @@
-@(receta: Receta)
-<receta>
-    <nombre>@receta.getNombre</nombre>
-    <tiempo>@receta.getTiempoPreparacion</tiempo>
-</receta>

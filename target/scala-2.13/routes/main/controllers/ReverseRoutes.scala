@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Thu Jan 28 18:57:09 CET 2021
+// @DATE:Sun Feb 07 13:20:56 CET 2021
 
 import play.api.mvc.Call
 
@@ -18,13 +18,13 @@ package controllers {
     }
 
   
-    // @LINE:10
+    // @LINE:12
     def updateReceta(): Call = {
       
       Call("PUT", _prefix + { _defaultPrefix } + "recetas/update")
     }
   
-    // @LINE:11
+    // @LINE:13
     def deleteReceta(): Call = {
       
       Call("DELETE", _prefix + { _defaultPrefix } + "recetas/delete")
@@ -42,7 +42,7 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "recetas")
     }
   
-    // @LINE:9
+    // @LINE:11
     def getListaRecetas(): Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "recetas/list")
@@ -50,14 +50,14 @@ package controllers {
   
   }
 
-  // @LINE:14
+  // @LINE:17
   class ReverseAssets(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:14
+    // @LINE:17
     def versioned(file:Asset): Call = {
       implicit lazy val _rrc = new play.core.routing.ReverseRouteContext(Map(("path", "/public"))); _rrc
       Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[play.api.mvc.PathBindable[Asset]].unbind("file", file))

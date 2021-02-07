@@ -5,8 +5,10 @@ import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,17 +16,19 @@ import java.util.List;
 public class Receta extends Model {
 
     @Id
-    long id;
+    Long id;
 
-    @Constraints.Required
     private String nombre;
-    private String ingrediente;
-    private int tiempoPreparacion; //en segundos
+    private String tiempo;
+    private String tipo; //tipo receta (vegano, vegetariano, omnivora?)
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Ingrediente> ingredientes = new ArrayList<>();
+
+    static public List<Receta> listaRecetas = new ArrayList<>();
 
     public static final Finder<Long, Receta> find = new Finder<>(Receta.class);
 
-    private ArrayList<String> listaIngredientes = new ArrayList<>();
-    static public ArrayList<Receta> listaRecetas = new ArrayList<>();
 
     public Receta() {}
 
@@ -32,60 +36,55 @@ public class Receta extends Model {
         return find.byId(id);
     }
 
-    //el valor del nombre es unico por lo que solo devuelve una receta
     public static Receta findByName(String nombre) {
         return find.query().where().contains("nombre", nombre).findOne();
     }
 
-    //aqui se usa lista porque probablemente aparezcan varias recetas con ese tiempo
-    public static List<Receta> findByTime(int tiempo) {
-        return null;
+    public static List<Receta> findByTime(int time) {
+        return find.query().where().contains("tiempo", String.valueOf(time)).findList();
     }
 
+    public static List<Receta> findAll() {
+        return find.all();
+    }
 
-    public String getIngrediente(int index) {
-        return this.listaIngredientes.get(index);
+    public Ingrediente getIngrediente(int index) {
+        return this.ingredientes.get(index);
+    }
+
+    public void setIngredientes(List<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
     public String getNombre() {
         return this.nombre;
     }
 
-    public ArrayList<String> getListaIngredientes() { return this.listaIngredientes; }
+    public List<Ingrediente> getIngredientes() { return this.ingredientes; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public int getTiempoPreparacion() {
-        return tiempoPreparacion;
+    public String getTiempo() {
+        return tiempo;
     }
 
-    public void setTiempoPreparacion(int tiempoPreparacion) {
-        this.tiempoPreparacion = tiempoPreparacion;
+    public void setTiempo(String tiempo) {
+        this.tiempo = tiempo;
     }
 
-    public void setIngrediente(String ingrediente) {
-        this.ingrediente = ingrediente;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void addIngrediente(String ingrediente) {
-        listaIngredientes.add(ingrediente);
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String ingredientesToString(){
-        String ingredientes = "";
-        for (int i = 0; i < listaIngredientes.size(); i++) {
-            ingredientes = ingredientes.concat(getIngrediente(i)+ ", ");
-        }
-        return ingredientes;
+    public void addIngrediente(Ingrediente ingrediente) {
+        this.ingredientes.add(ingrediente);
+        ingrediente.getRecetas().add(this);
     }
 
-    public String toString(){
-        String receta = "Nombre: " + nombre + "\nTiempo (min): "+tiempoPreparacion+"\nIngredientes: ";
-        for (int i = 0; i < listaIngredientes.size(); i++) {
-            receta = receta.concat("\n"+getIngrediente(i));
-        }
-        return receta;
-    }
 }

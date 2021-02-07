@@ -1,3 +1,9 @@
-@(receta: Receta)
-<?xml version="1.0" encoding="utf-8" ?>
-@_receta(receta)
+@(receta: Receta, ingredientes: List[Ingrediente])
+<receta>
+    <nombre>@receta.getNombre</nombre>
+    <tiempo>@receta.getTiempo</tiempo>
+    @for(u <- ingredientes) {
+    @ingrediente(u)
+    }
+
+</receta>

@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Thu Jan 28 18:57:09 CET 2021
+// @DATE:Sun Feb 07 13:20:56 CET 2021
 
 package router
 
@@ -16,7 +16,7 @@ class Routes(
   override val errorHandler: play.api.http.HttpErrorHandler, 
   // @LINE:7
   RecetasController_0: controllers.RecetasController,
-  // @LINE:14
+  // @LINE:17
   Assets_1: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
@@ -25,7 +25,7 @@ class Routes(
    def this(errorHandler: play.api.http.HttpErrorHandler,
     // @LINE:7
     RecetasController_0: controllers.RecetasController,
-    // @LINE:14
+    // @LINE:17
     Assets_1: controllers.Assets
   ) = this(errorHandler, RecetasController_0, Assets_1, "/")
 
@@ -94,7 +94,7 @@ POST    /recetas                   controllers.RecetasController.create(nombre: 
     )
   )
 
-  // @LINE:9
+  // @LINE:11
   private[this] lazy val controllers_RecetasController_getListaRecetas2_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/list")))
   )
@@ -107,12 +107,13 @@ POST    /recetas                   controllers.RecetasController.create(nombre: 
       Nil,
       "GET",
       this.prefix + """recetas/list""",
-      """""",
+      """GET     /recetas/nombre          controllers.RecetasController.getRecetaNombre(request: Request)
+GET     /recetas/id              controllers.RecetasController.getRecetaNombre(request: Request)""",
       Seq()
     )
   )
 
-  // @LINE:10
+  // @LINE:12
   private[this] lazy val controllers_RecetasController_updateReceta3_route = Route("PUT",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/update")))
   )
@@ -132,7 +133,7 @@ POST    /recetas                   controllers.RecetasController.create(nombre: 
     )
   )
 
-  // @LINE:11
+  // @LINE:13
   private[this] lazy val controllers_RecetasController_deleteReceta4_route = Route("DELETE",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/delete")))
   )
@@ -152,7 +153,7 @@ POST    /recetas                   controllers.RecetasController.create(nombre: 
     )
   )
 
-  // @LINE:14
+  // @LINE:17
   private[this] lazy val controllers_Assets_versioned5_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
@@ -187,27 +188,27 @@ POST    /recetas                   controllers.RecetasController.create(nombre: 
           req => RecetasController_0.getReceta(req))
       }
   
-    // @LINE:9
+    // @LINE:11
     case controllers_RecetasController_getListaRecetas2_route(params@_) =>
       call { 
         controllers_RecetasController_getListaRecetas2_invoker.call(RecetasController_0.getListaRecetas)
       }
   
-    // @LINE:10
+    // @LINE:12
     case controllers_RecetasController_updateReceta3_route(params@_) =>
       call { 
         controllers_RecetasController_updateReceta3_invoker.call(
           req => RecetasController_0.updateReceta(req))
       }
   
-    // @LINE:11
+    // @LINE:13
     case controllers_RecetasController_deleteReceta4_route(params@_) =>
       call { 
         controllers_RecetasController_deleteReceta4_invoker.call(
           req => RecetasController_0.deleteReceta(req))
       }
   
-    // @LINE:14
+    // @LINE:17
     case controllers_Assets_versioned5_route(params@_) =>
       call(Param[String]("path", Right("/public")), params.fromPath[Asset]("file", None)) { (path, file) =>
         controllers_Assets_versioned5_invoker.call(Assets_1.versioned(path, file))

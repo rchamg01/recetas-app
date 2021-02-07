@@ -33,7 +33,7 @@ Seq[Any](format.raw/*1.25*/("""
 """),format.raw/*2.1*/("""<?xml version="1.0" encoding="utf-8" ?>
 <recetas>
     """),_display_(/*4.6*/for(u <- recetas) yield /*4.23*/{_display_(Seq[Any](format.raw/*4.24*/("""
-        """),_display_(/*5.10*/_receta(u)),format.raw/*5.20*/("""
+        """),_display_(/*5.10*/receta(u,  u.getIngredientes())),format.raw/*5.41*/("""
     """)))}),format.raw/*6.6*/("""
 """),format.raw/*7.1*/("""</recetas>
 """))
@@ -52,10 +52,10 @@ Seq[Any](format.raw/*1.25*/("""
 
               /*
                   -- GENERATED --
-                  DATE: 2021-01-28T18:57:09.312
+                  DATE: 2021-02-01T19:11:35.881
                   SOURCE: E:/universidad/MASTER/cloud/recetas-app/app/views/recetas.scala.xml
-                  HASH: dcb92f655be3b0d55cbc7ff465879a5003fc2855
-                  MATRIX: 909->1|1026->24|1054->26|1136->83|1168->100|1206->101|1243->112|1273->122|1309->129|1337->131
+                  HASH: 009fa6dbb09c20e2ce4917e9c7092387bfd6bb73
+                  MATRIX: 909->1|1026->24|1054->26|1136->83|1168->100|1206->101|1243->112|1294->143|1330->150|1358->152
                   LINES: 27->1|32->1|33->2|35->4|35->4|35->4|36->5|36->5|37->6|38->7
                   -- GENERATED --
               */
