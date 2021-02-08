@@ -1,17 +1,14 @@
 package controllers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import models.Ingrediente;
 import models.Receta;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+
 import play.data.Form;
 import play.data.FormFactory;
+
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -29,7 +26,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,9 +38,10 @@ public class RecetasController extends Controller {
     @Inject
     FormFactory formFactory;
 
+    //metodo funciona si no se utiliza el findbyId en la busqueda de ingredientes
     public Result create(Http.Request request) {
 
-        Optional<String> contenido = request.contentType();
+        //Optional<String> contenido = request.contentType();
         /* ----JSON------
         [
             {
@@ -59,9 +56,7 @@ public class RecetasController extends Controller {
             }
         ]
         */
-        if(contenido.toString().contains("application/json")){
-            System.out.println("Receta escrita en JSON");
-            /////////////////form solo vale para json//////////////////////
+
             Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
 
             System.out.println(form.rawData());
@@ -72,10 +67,6 @@ public class RecetasController extends Controller {
 
                 Receta rAux = form.get(); //se crea una receta donde se recoge los datos de la request
                 List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
-
-                //System.out.println("numero ingredientes: "+rAux.getListaIngredients().size());
-
-                //System.out.println(rAux.getListaIngredients());
 
                 Receta rf = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
 
@@ -88,19 +79,17 @@ public class RecetasController extends Controller {
                 System.out.println("tipo: "+ rf.getTipo());
 
 
+                for(Ingrediente ingrediente: iAux){
+                    System.out.println("id: "+ingrediente.getId()); //sale nulo siempre con id???
+                    if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd //con getId no funciona, da null pointer exception
+                        ingrediente.save();
+                        rf.addIngrediente(ingrediente);
+                    }else{ //si esta
+                        Ingrediente ingredienteAux = Ingrediente.findByNombre(ingrediente.getNombre());
+                        rf.addIngrediente(ingredienteAux);
+                    }
+                }
                 rf.save(); //se guarda la receta en la base de datos
-
-
-
-                ///////////YA NO VALE///////////////////////////////////
-               /* Receta r = form.get();
-                System.out.println("Nombre: " +r.getNombre());
-                System.out.println("Tiempo: " + r.getTiempoPreparacion());
-                System.out.println("ingredientes");
-                for (int i = 0; i< r.getListaIngredientes().size(); i++){
-                    System.out.println(r.getIngrediente(i));
-                }*/
-               // System.out.println(r.toString());
             }
 
             return Results.ok();
@@ -138,18 +127,6 @@ public class RecetasController extends Controller {
                 }
             }
 
-            Receta.listaRecetas.add(r);
-            //ObjectNode node = Json.newObject();
-            //node.put("success", false);
-            //node.put("message", "El usuario ha sido creado");
-
-            Result respuesta = null;
-            for (int i = 0; i < r.getListaIngredientes().size(); i++) {
-                respuesta = Results.ok(requestBodyJSON).withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
-            }
-            return respuesta;*/
-        }
-
         /*
         *
         *
@@ -157,42 +134,23 @@ public class RecetasController extends Controller {
         <recetas>
             <receta>
                 <nombre>Cocido de garbanzos</nombre>
-                <ingrediente>garbanzos</ingrediente>
+                <ingredientes>
+                    <ingrediente>
+                        <nombre>garbanzos</nombre>
+                    </ingrediente>
+                    <ingrediente>
+                        <nombre>carne</nombre>
+                    </ingrediente>
+                    <ingrediente>
+                        <nombre>patatas</nombre>
+                    </ingrediente>
+                </ingredientes>
             </receta>
         </recetas>
         *
         * */
-        else if(contenido.toString().contains("application/xml")){
-            System.out.println("Receta escrita en XML");
-            Document requestBodyXML = request.body().asXml(); //para pedirlo en xml
-            Receta r = new Receta();
-            NodeList nombre = requestBodyXML.getElementsByTagName("nombre");
-            for (int i = 0; i < nombre.getLength(); i++) {
-                String nombre_xml = requestBodyXML.getElementsByTagName("nombre").item(i).getTextContent();
-                for (int j = 0; j < Receta.listaRecetas.size(); j++) {
-                    if(Receta.listaRecetas.get(j).getNombre().equals(nombre_xml)){
-                        return Results.badRequest("La receta a añadir ya existe en la base de datos");
-                    }
-                }
 
-                r.setNombre(nombre_xml);
-                System.out.println("Nombre: "+nombre_xml);
-            }
-
-            NodeList tiempo = requestBodyXML.getElementsByTagName("tiempo");
-            String tiempo_xml = requestBodyXML.getElementsByTagName("tiempo").item(0).getTextContent();
-           // r.setTiempoPreparacion(Integer.parseInt(tiempo_xml));
-            System.out.println("Tiempo (min): "+tiempo_xml);
-
-            NodeList ingredientes = requestBodyXML.getElementsByTagName("ingrediente");
-            for (int i = 0; i < ingredientes.getLength(); i++) {
-                String ingrediente_xml = requestBodyXML.getElementsByTagName("ingrediente").item(i).getTextContent();
-                //r.addIngrediente(ingrediente_xml);
-                System.out.println("Ingrediente: "+ingrediente_xml);
-            }
-            Receta.listaRecetas.add(r);
-
-            Result respuesta = null;
+        /////////////////////////////////////// IGNORAR: SON APUNTES ////////////////////////////////////////////////7
 
             //Content content = recetas.render(Receta.listaRecetas); YA FUNCIONA (PARECE)
 
@@ -208,33 +166,22 @@ public class RecetasController extends Controller {
             arr.add(2);
             node.put("numbers", arr);*/
 
-            /*Receta rec = new Receta();
-            rec.setNombre("cocido");
-            rec.setTiempoPreparacion(45);
-            rec.addIngrediente("garbanzos");
-
-            Receta rec2 = new Receta();
-            rec2.setNombre("cocido");
-            rec2.setTiempoPreparacion(45);
-            rec2.addIngrediente("garbanzos");
-
-            List<Receta> recets = new ArrayList<>();
-            recets.add(rec);
-            recets.add(rec2);
 
             //Content content = recetas.render(recets);
-            //Content content = receta.render(rec);
+
 
             //content = views.xml.usuario.render();
-            */
 
-            RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //mejor forma
+
+           /* RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //buena forma
             res.setMessage("La receta ha sido creada");
             res.setSuccess(true);
-            JsonNode json = Json.toJson(res);
+            JsonNode json = Json.toJson(res);*/
+
 
             ////mejor manera////
-           /* if(request.accepts("application/xml")){
+
+        /*if(request.accepts("application/xml")){
                 Content content = receta.render(r);
                 return ok(content);
             }else if (request.accepts("application/json")){
@@ -243,105 +190,147 @@ public class RecetasController extends Controller {
             }else{
                 return status(406);
             }*/
+    }
 
-            /*for (int i = 0; i < r.getListaIngredientes().size(); i++) {
-                respuesta = Results.ok().withHeader("nombre", r.getNombre()).withHeader("tiempo", String.valueOf(r.getTiempoPreparacion())).withHeader("ingredientes", r.ingredientesToString());
-            }
-            return respuesta;*/
-            return Results.ok();
+    //falta terminar
+    public Result getRecetaNombre(String nombre) { //añadir parámetro de http request??
 
-        }else{ //si no esta ni en json ni en xml
-            return status(406);
+        Receta receta = Receta.findByName(nombre);
+
+        if(receta == null) {
+            return status(404); //not found
         }
 
+        List<Ingrediente> ingredientes = receta.getIngredientes();
+
+        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+        if (request.accepts("application/xml")) {
+
+            return ok(views.xml.receta.render(receta,ingredientes));
+
+        }else if (request.accepts("application/json")) {
+
+            JsonNode node = Json.toJson(receta);
+            return ok(node);
+
+        }*/
+        return Results.status(415); //Unsupported Media Type
 
     }
 
-    public Result getReceta(Http.Request request) {
-        Optional<String> contenido = request.contentType();
+    //falta terminar, mismo que con nombre
+    public Result getRecetaId(Long id) { //añadir parámetro de http request??
 
-        if(contenido.toString().contains("application/json")){
-            JsonNode requestBodyJSON = request.body().asJson();
-            int indice = requestBodyJSON.path("indice").asInt();
-            System.out.println("indice: "+ indice +"   Tamaño lista: "+(Receta.listaRecetas.size()-1));
+        Receta receta = Receta.findById(id);
 
-            if (Receta.listaRecetas.size() > indice) {
-                Receta r = Receta.listaRecetas.get(indice);
-                System.out.println(r.toString());
-                return ok(r.toString());
-
-            }else{
-                return Results.notFound("No existe ninguna receta con ese índice");
-            }
-        }else if(contenido.toString().contains("application/xml")){
-            Document requestBodyXML = request.body().asXml();
-            int indice = Integer.parseInt(requestBodyXML.getElementsByTagName("indice").item(0).getTextContent());
-            System.out.println("indice: "+ indice +"   Tamaño lista: "+(Receta.listaRecetas.size()-1));
-
-            if (Receta.listaRecetas.size() > indice) {
-                Receta r = Receta.listaRecetas.get(indice);
-                System.out.println(r.toString());
-                return ok(r.toString());
-            }else{
-                return Results.notFound("No existe ninguna receta con ese índice");
-            }
-
-        }else{
-            System.out.println("El indice no está escrito en formato JSON o XML");
-            return Results.status(415); //Unsupported Media Type
+        if(receta == null) {
+            return status(404); //not found
         }
 
+        List<Ingrediente> ingredientes = receta.getIngredientes();
+
+        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+        if (request.accepts("application/xml")) {
+
+            return ok(views.xml.receta.render(receta,ingredientes));
+
+        }else if (request.accepts("application/json")) {
+
+            JsonNode node = Json.toJson(receta);
+            return ok(node);
+
+        }*/
+        return Results.status(415); //Unsupported Media Type
+
+    }
+
+    //falta implementar para crear lista json
+    public Result getRecetaTiempo(String tiempo) { //añadir parámetro de http request??
+
+        List<Receta> recetas = Receta.findByTime(tiempo);
+
+        if(recetas == null) {
+            return status(404); //not found
+        }
+
+        //List<Ingrediente> ingredientes = receta.getIngredientes();
+
+        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+        if (request.accepts("application/xml")) {
+
+            return ok(views.xml.receta.render(receta,ingredientes));
+
+        }else if (request.accepts("application/json")) {
+
+            JsonNode node = Json.toJson(receta);
+            return ok(node);
+
+        }*/
+        return Results.status(415); //Unsupported Media Type
+
+    }
+ //falta implementar para crear lista json
+    public Result getRecetaTipo(String tipo) { //añadir parámetro de http request??
+
+        List<Receta> recetas = Receta.findByTipo(tipo);
+
+        if(recetas == null) {
+            return status(404); //not found
+        }
+
+        //List<Ingrediente> ingredientes = receta.getIngredientes();
+
+        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+        if (request.accepts("application/xml")) {
+
+            return ok(views.xml.receta.render(receta,ingredientes));
+
+        }else if (request.accepts("application/json")) {
+
+            JsonNode node = Json.toJson(receta);
+            return ok(node);
+
+        }*/
+        return Results.status(415); //Unsupported Media Type
 
     }
 
     //delete receta por ID FUNCIONA!!
-    public Result deleteReceta(Http.Request request) {
+    public Result deleteReceta(Long id) {
 
-        Optional<String> contenido = request.contentType();
+        Receta receta = Receta.findById(id);
 
-        if(contenido.toString().contains("application/json")){
-            JsonNode requestBodyJSON = request.body().asJson();
-            long id = requestBodyJSON.path("id").asLong();
-
-            Receta receta = Receta.findById(id);
-            //Receta.listaRecetas.remove(id);
-
-            if (receta == null) { //si no existe (la busqueda devolvio null)
-                return Results.status(404); //not found
-            }
-            System.out.println("Receta " + id + " eliminada");
-            receta.delete();
-            return Results.ok();
-
-        }else if(contenido.toString().contains("application/xml")) {
-            Document requestBodyXML = request.body().asXml();
-            long id = Long.parseLong(requestBodyXML.getElementsByTagName("id").item(0).getTextContent());
-            Receta receta = Receta.findById(id);
-            //Receta.listaRecetas.remove(id);
-
-            if (receta == null) { //si no existe (la busqueda devolvio null)
-                return Results.status(404);
-            }
-            System.out.println("Receta " + id + " eliminada");
-            receta.delete();
-            return Results.ok();
-
+        if (receta == null) { //si no existe (la busqueda devolvio null)
+            return Results.status(404); //not found
         }else{
-            System.out.println("El indice no está escrito en formato JSON o XML");
-            return Results.status(415); //Unsupported Media Type
+            System.out.println("Receta " + id + " eliminada");
+            receta.delete();
+            return Results.ok();
         }
 
     }
-    //no vale
-    public Result updateReceta(Http.Request request) {
-        JsonNode requestBodyJSON = request.body().asJson();
-        int indice = requestBodyJSON.path("indice").asInt();
-        Receta.listaRecetas.get(indice);
-        System.out.println("Usuario " + indice + " actualizado");
-        return ok("Usuario " + indice + " actualizado");
+
+    //delete ingrediente por ID FUNCIONA!!
+    public Result deleteIngrediente(Long id) {
+
+        Ingrediente ingrediente = Ingrediente.findById(id);
+
+        if (ingrediente == null) { //si no existe (la busqueda devolvio null)
+            return Results.status(404); //not found
+        }else{
+            System.out.println("Ingrediente " + id + " eliminado");
+            ingrediente.delete();
+            return Results.ok();
+        }
+
     }
 
+    //pendiente de hacer
+    public Result updateReceta() {
+        return ok("Usuario actualizado");
+    }
 
+    //rehacer entero NO VALE
     public Result getListaRecetas() {
         String listado = "";
 

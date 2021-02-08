@@ -3,15 +3,17 @@
 # ~~~~
 
 # An example controller showing a sample home page
-#POST    /recetas                   controllers.RecetasController.create(nombre: String, edad: Int)
-POST    /recetas                   controllers.RecetasController.create(request: Request)
-GET     /recetas/get               controllers.RecetasController.getReceta(request: Request)
-#GET     /recetas/nombre          controllers.RecetasController.getRecetaNombre(request: Request)
-#GET     /recetas/id              controllers.RecetasController.getRecetaNombre(request: Request)
-GET     /recetas/list              controllers.RecetasController.getListaRecetas
-PUT     /recetas/update            controllers.RecetasController.updateReceta(request: Request)
-DELETE  /recetas/delete            controllers.RecetasController.deleteReceta(request: Request)
 
+POST    /recetas                   controllers.RecetasController.create(request: Request)
+GET     /recetas/tipo/:tipo        controllers.RecetasController.getRecetaTipo(tipo: String)
+GET     /recetas/nombre/:nombre    controllers.RecetasController.getRecetaNombre(nombre: String)
+GET     /recetas/id/:id            controllers.RecetasController.getRecetaId(id: Long)
+#falta hacer get recetas con x ingrediente
+GET     /recetas/list              controllers.RecetasController.getListaRecetas
+PUT     /recetas/                  controllers.RecetasController.updateReceta
+#falta hacer put de ingrediente
+DELETE  /recetas/:id               controllers.RecetasController.deleteReceta(id: Long)
+DELETE  /ingredientes/:id          controllers.RecetasController.deleteIngrediente(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

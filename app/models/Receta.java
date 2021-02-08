@@ -18,8 +18,13 @@ public class Receta extends Model {
     @Id
     Long id;
 
+    @Constraints.Required
     private String nombre;
+
+    @Constraints.Required
     private String tiempo;
+
+    @Constraints.Required
     private String tipo; //tipo receta (vegano, vegetariano, omnivora?)
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -40,12 +45,24 @@ public class Receta extends Model {
         return find.query().where().contains("nombre", nombre).findOne();
     }
 
-    public static List<Receta> findByTime(int time) {
-        return find.query().where().contains("tiempo", String.valueOf(time)).findList();
+    public static List<Receta> findByTime(String tiempo) {
+        return find.query().where().contains("tiempo", tiempo).findList();
+    }
+
+    public static List<Receta> findByTipo(String tipo) {
+        return find.query().where().contains("tipo", tipo).findList();
     }
 
     public static List<Receta> findAll() {
         return find.all();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Ingrediente getIngrediente(int index) {

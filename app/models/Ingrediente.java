@@ -2,11 +2,11 @@ package models;
 
 import io.ebean.Finder;
 import io.ebean.Model;
+import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +15,8 @@ public class Ingrediente extends Model {
     @Id
     private Long id;
 
+    @Constraints.Required
     private String nombre;
-    //private ArrayList<Ingrediente> ingredientes;
 
     @ManyToMany(mappedBy = "ingredientes")
     List<Receta> listaRecetas; //relacion mn
@@ -29,6 +29,14 @@ public class Ingrediente extends Model {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /*public void setListaIngredientes(ArrayList<Ingrediente> ingredientes) {
@@ -55,8 +63,12 @@ public class Ingrediente extends Model {
         ingredientes.add(ingrediente);
     }*/
 
-    public static Ingrediente findIngredienteByNombre(String nombreIngrediente) {
+    public static Ingrediente findByNombre(String nombreIngrediente) {
         return find.query().where().eq("nombre", nombreIngrediente).findOne();
+    }
+
+    public static Ingrediente findById(Long id) {
+        return find.byId(id);
     }
 
 }

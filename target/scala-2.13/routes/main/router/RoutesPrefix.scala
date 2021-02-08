@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Sun Feb 07 13:20:56 CET 2021
+// @DATE:Mon Feb 08 18:28:58 CET 2021
 
 
 package router {
