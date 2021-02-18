@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Mon Feb 08 18:28:58 CET 2021
+// @DATE:Wed Feb 17 17:47:29 CET 2021
 
 import play.api.mvc.Call
 
@@ -18,40 +18,46 @@ package controllers {
     }
 
   
-    // @LINE:10
-    def getRecetaId(id:Long): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "recetas/id/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[Long]].unbind("id", id)))
-    }
-  
-    // @LINE:16
-    def deleteIngrediente(id:Long): Call = {
-      
-      Call("DELETE", _prefix + { _defaultPrefix } + "ingredientes/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[Long]].unbind("id", id)))
-    }
-  
-    // @LINE:13
+    // @LINE:14
     def updateReceta(): Call = {
       
       Call("PUT", _prefix + { _defaultPrefix } + "recetas/")
     }
   
-    // @LINE:15
+    // @LINE:10
+    def getRecetaNombre(nombre:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "recetas/search/nombre/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("nombre", nombre)))
+    }
+  
+    // @LINE:13
+    def getListaRecetas(): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "recetas/list")
+    }
+  
+    // @LINE:11
+    def getRecetaId(id:Long): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "recetas/search/id/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[Long]].unbind("id", id)))
+    }
+  
+    // @LINE:16
     def deleteReceta(id:Long): Call = {
       
       Call("DELETE", _prefix + { _defaultPrefix } + "recetas/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[Long]].unbind("id", id)))
     }
   
     // @LINE:9
-    def getRecetaNombre(nombre:String): Call = {
+    def getRecetaTiempo(tiempo:String): Call = {
       
-      Call("GET", _prefix + { _defaultPrefix } + "recetas/nombre/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("nombre", nombre)))
+      Call("GET", _prefix + { _defaultPrefix } + "recetas/search/tiempo/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("tiempo", tiempo)))
     }
   
     // @LINE:8
     def getRecetaTipo(tipo:String): Call = {
       
-      Call("GET", _prefix + { _defaultPrefix } + "recetas/tipo/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("tipo", tipo)))
+      Call("GET", _prefix + { _defaultPrefix } + "recetas/search/tipo/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("tipo", tipo)))
     }
   
     // @LINE:7
@@ -60,22 +66,16 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "recetas")
     }
   
-    // @LINE:12
-    def getListaRecetas(): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "recetas/list")
-    }
-  
   }
 
-  // @LINE:19
+  // @LINE:20
   class ReverseAssets(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:19
+    // @LINE:20
     def versioned(file:Asset): Call = {
       implicit lazy val _rrc = new play.core.routing.ReverseRouteContext(Map(("path", "/public"))); _rrc
       Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[play.api.mvc.PathBindable[Asset]].unbind("file", file))

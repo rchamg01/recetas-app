@@ -3,15 +3,18 @@
 # ~~~~
 
 # An example controller showing a sample home page
-#POST    /recetas                   controllers.RecetasController.create(nombre: String, edad: Int)
+
 POST    /recetas                   controllers.RecetasController.create(request: Request)
-GET     /recetas/                     controllers.RecetasController.getReceta(request: Request)
-#GET     /recetas/nombre          controllers.RecetasController.getRecetaNombre(request: Request)
-#GET     /recetas/id              controllers.RecetasController.getRecetaNombre(request: Request)
-GET     /recetas/list              controllers.RecetasController.getListaRecetas
-PUT     /recetas/                     controllers.RecetasController.updateReceta
-DELETE  /recetas/:id                  controllers.RecetasController.deleteReceta(id: Long)
-DELETE  /ingredientes/:id             controllers.RecetasController.deleteIngrediente(id: Long)
+GET     /recetas/search/tipo/:tipo        controllers.RecetasController.getRecetaTipo(request: Request, tipo: String)
+GET     /recetas/search/tiempo/:tiempo        controllers.RecetasController.getRecetaTiempo(request: Request, tiempo: String)
+GET     /recetas/search/nombre/:nombre    controllers.RecetasController.getRecetaNombre(request: Request, nombre: String)
+GET     /recetas/search/id/:id            controllers.RecetasController.getRecetaId(request: Request, id: Long)
+#falta hacer get recetas con x ingrediente
+GET     /recetas/list              controllers.RecetasController.getListaRecetas(request: Request)
+PUT     /recetas/                  controllers.RecetasController.updateReceta
+#falta hacer put de ingrediente
+DELETE  /recetas/:id               controllers.RecetasController.deleteReceta(id: Long)
+#DELETE  /ingredientes/:id          controllers.RecetasController.deleteIngrediente(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

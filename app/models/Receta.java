@@ -1,9 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
+import play.libs.Json;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,10 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties
 public class Receta extends Model {
 
     @Id
-    Long id;
+    private Long id;
 
     @Constraints.Required
     private String nombre;
@@ -30,8 +36,6 @@ public class Receta extends Model {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Ingrediente> ingredientes = new ArrayList<>();
 
-    static public List<Receta> listaRecetas = new ArrayList<>();
-
     public static final Finder<Long, Receta> find = new Finder<>(Receta.class);
 
 
@@ -41,8 +45,8 @@ public class Receta extends Model {
         return find.byId(id);
     }
 
-    public static Receta findByName(String nombre) {
-        return find.query().where().contains("nombre", nombre).findOne();
+    public static List<Receta> findByName(String nombre) {
+        return find.query().where().icontains("nombre", nombre).findList();
     }
 
     public static List<Receta> findByTime(String tiempo) {
@@ -50,7 +54,7 @@ public class Receta extends Model {
     }
 
     public static List<Receta> findByTipo(String tipo) {
-        return find.query().where().contains("tipo", tipo).findList();
+        return find.query().where().icontains("tipo", tipo).findList();
     }
 
     public static List<Receta> findAll() {
@@ -73,11 +77,11 @@ public class Receta extends Model {
         this.ingredientes = ingredientes;
     }
 
+    public List<Ingrediente> getIngredientes() { return this.ingredientes; }
+
     public String getNombre() {
         return this.nombre;
     }
-
-    public List<Ingrediente> getIngredientes() { return this.ingredientes; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

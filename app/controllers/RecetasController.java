@@ -2,6 +2,9 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Ingrediente;
 import models.Receta;
 import org.w3c.dom.Document;
@@ -33,6 +36,7 @@ import java.util.Optional;
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
+
 public class RecetasController extends Controller {
 
     @Inject
@@ -72,16 +76,11 @@ public class RecetasController extends Controller {
 
                 //se añaden los atributos "unicos" al objeto vacio
                 rf.setNombre(rAux.getNombre());
-                System.out.println("nombre rec: "+ rf.getNombre());
                 rf.setTiempo(rAux.getTiempo());
-                System.out.println("tiempo: "+ rf.getTiempo());
                 rf.setTipo(rAux.getTipo());
-                System.out.println("tipo: "+ rf.getTipo());
-
 
                 for(Ingrediente ingrediente: iAux){
-                    System.out.println("id: "+ingrediente.getId()); //sale nulo siempre con id???
-                    if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd //con getId no funciona, da null pointer exception
+                    if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd
                         ingrediente.save();
                         rf.addIngrediente(ingrediente);
                     }else{ //si esta
@@ -192,34 +191,34 @@ public class RecetasController extends Controller {
             }*/
     }
 
-    //falta terminar
-    public Result getRecetaNombre(String nombre) { //añadir parámetro de http request??
+    //falta terminar json
+    public Result getRecetaNombre(Http.Request request, String nombre) {
 
-        Receta receta = Receta.findByName(nombre);
+        List<Receta> recetas = Receta.findByName(nombre);
 
-        if(receta == null) {
+        if(recetas.isEmpty()) {
             return status(404); //not found
         }
 
-        List<Ingrediente> ingredientes = receta.getIngredientes();
+        //List<Ingrediente> ingredientes = receta.getIngredientes();
 
-        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+        //funciona
         if (request.accepts("application/xml")) {
 
-            return ok(views.xml.receta.render(receta,ingredientes));
+            return ok(views.xml.recetas.render(recetas));
 
         }else if (request.accepts("application/json")) {
 
-            JsonNode node = Json.toJson(receta);
-            return ok(node);
+            //JsonNode node = Json.toJson(recetas);
+            //return ok(node);
 
-        }*/
+        }
         return Results.status(415); //Unsupported Media Type
 
     }
 
     //falta terminar, mismo que con nombre
-    public Result getRecetaId(Long id) { //añadir parámetro de http request??
+    public Result getRecetaId(Http.Request request, Long id) {
 
         Receta receta = Receta.findById(id);
 
@@ -229,7 +228,7 @@ public class RecetasController extends Controller {
 
         List<Ingrediente> ingredientes = receta.getIngredientes();
 
-        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+
         if (request.accepts("application/xml")) {
 
             return ok(views.xml.receta.render(receta,ingredientes));
@@ -239,58 +238,55 @@ public class RecetasController extends Controller {
             JsonNode node = Json.toJson(receta);
             return ok(node);
 
-        }*/
+        }
         return Results.status(415); //Unsupported Media Type
 
     }
 
     //falta implementar para crear lista json
-    public Result getRecetaTiempo(String tiempo) { //añadir parámetro de http request??
+    public Result getRecetaTiempo(Http.Request request, String tiempo) {
 
         List<Receta> recetas = Receta.findByTime(tiempo);
 
-        if(recetas == null) {
+        if(recetas.isEmpty()) {
             return status(404); //not found
         }
 
         //List<Ingrediente> ingredientes = receta.getIngredientes();
 
-        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
+
         if (request.accepts("application/xml")) {
 
-            return ok(views.xml.receta.render(receta,ingredientes));
+            return ok(views.xml.recetas.render(recetas));
 
         }else if (request.accepts("application/json")) {
 
-            JsonNode node = Json.toJson(receta);
+            JsonNode node = Json.toJson(recetas);
             return ok(node);
 
-        }*/
+        }
         return Results.status(415); //Unsupported Media Type
 
     }
  //falta implementar para crear lista json
-    public Result getRecetaTipo(String tipo) { //añadir parámetro de http request??
+    public Result getRecetaTipo(Http.Request request, String tipo) {
 
         List<Receta> recetas = Receta.findByTipo(tipo);
 
-        if(recetas == null) {
+        if(recetas.isEmpty()) {
             return status(404); //not found
         }
 
-        //List<Ingrediente> ingredientes = receta.getIngredientes();
-
-        /* ---REQUEST? COMO HACERLO SIN PASAR EL PARÁMETRO DE HTTP REQUEST?
         if (request.accepts("application/xml")) {
 
-            return ok(views.xml.receta.render(receta,ingredientes));
+            return ok(views.xml.recetas.render(recetas));
 
         }else if (request.accepts("application/json")) {
 
-            JsonNode node = Json.toJson(receta);
-            return ok(node);
+            //JsonNode node = Json.toJson(receta);
+            //return ok(node);
 
-        }*/
+        }
         return Results.status(415); //Unsupported Media Type
 
     }
@@ -310,41 +306,32 @@ public class RecetasController extends Controller {
 
     }
 
-    //delete ingrediente por ID FUNCIONA!!
-    public Result deleteIngrediente(Long id) {
-
-        Ingrediente ingrediente = Ingrediente.findById(id);
-
-        if (ingrediente == null) { //si no existe (la busqueda devolvio null)
-            return Results.status(404); //not found
-        }else{
-            System.out.println("Ingrediente " + id + " eliminado");
-            ingrediente.delete();
-            return Results.ok();
-        }
-
-    }
-
     //pendiente de hacer
     public Result updateReceta() {
         return ok("Usuario actualizado");
     }
 
-    //rehacer entero NO VALE
-    public Result getListaRecetas() {
-        String listado = "";
+    //falta json
+    public Result getListaRecetas(Http.Request request) {
 
-        if(Receta.listaRecetas.size() > 0) {
-            System.out.println("Lista de recetas: ");
+        List<Receta> recetas = Receta.findAll();
 
-            for (int i = 0; i < Receta.listaRecetas.size(); i++) {
-                System.out.println(Receta.listaRecetas.get(i).toString());
-                listado = listado.concat("\n" + Receta.listaRecetas.get(i).toString());
-            }
-            return ok("Lista de recetas:\n" + listado);
-        } else {
-            return Results.notFound("No hay ninguna receta añadida");
+        if(recetas.isEmpty()) {
+            return status(404); //not found
         }
+        //funciona
+        if (request.accepts("application/xml")) {
+
+            return ok(views.xml.recetas.render(recetas));
+
+        }else if (request.accepts("application/json")) {
+
+            //JsonNode node = Json.toJson(receta);
+            //return ok(node);
+
+        }
+        return Results.status(415); //Unsupported Media Type
+
     }
 
     public String getStringFromDocument(Document doc)
@@ -365,6 +352,8 @@ public class RecetasController extends Controller {
             return null;
         }
     }
+
+
 
 }
 

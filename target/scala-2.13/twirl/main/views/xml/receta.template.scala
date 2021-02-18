@@ -33,11 +33,12 @@ Seq[Any](format.raw/*1.51*/("""
 """),format.raw/*2.1*/("""<receta>
     <nombre>"""),_display_(/*3.14*/receta/*3.20*/.getNombre),format.raw/*3.30*/("""</nombre>
     <tiempo>"""),_display_(/*4.14*/receta/*4.20*/.getTiempo),format.raw/*4.30*/("""</tiempo>
-    """),_display_(/*5.6*/for(u <- ingredientes) yield /*5.28*/ {_display_(Seq[Any](format.raw/*5.30*/("""
-    """),_display_(/*6.6*/ingrediente(u)),format.raw/*6.20*/("""
-    """)))}),format.raw/*7.6*/("""
+    <tipo>"""),_display_(/*5.12*/receta/*5.18*/.getTipo),format.raw/*5.26*/("""</tipo>
+    """),_display_(/*6.6*/for(u <- ingredientes) yield /*6.28*/ {_display_(Seq[Any](format.raw/*6.30*/("""
+    """),_display_(/*7.6*/ingrediente(u)),format.raw/*7.20*/("""
+    """)))}),format.raw/*8.6*/("""
 
-"""),format.raw/*9.1*/("""</receta>"""))
+"""),format.raw/*10.1*/("""</receta>"""))
       }
     }
   }
@@ -53,11 +54,11 @@ Seq[Any](format.raw/*1.51*/("""
 
               /*
                   -- GENERATED --
-                  DATE: 2021-01-31T19:11:53.960
+                  DATE: 2021-02-17T17:40:54.222
                   SOURCE: E:/universidad/MASTER/cloud/recetas-app/app/views/receta.scala.xml
-                  HASH: ff0f11d50a0f815affc4fefa15840ab09446a753
-                  MATRIX: 920->1|1063->50|1091->52|1140->75|1154->81|1184->91|1234->115|1248->121|1278->131|1319->147|1356->169|1395->171|1427->178|1461->192|1497->199|1527->203
-                  LINES: 27->1|32->1|33->2|34->3|34->3|34->3|35->4|35->4|35->4|36->5|36->5|36->5|37->6|37->6|38->7|40->9
+                  HASH: f7078fe834c3b3574c48f604e03fe6003ee700f5
+                  MATRIX: 920->1|1063->50|1091->52|1140->75|1154->81|1184->91|1234->115|1248->121|1278->131|1326->153|1340->159|1368->167|1407->181|1444->203|1483->205|1515->212|1549->226|1585->233|1616->237
+                  LINES: 27->1|32->1|33->2|34->3|34->3|34->3|35->4|35->4|35->4|36->5|36->5|36->5|37->6|37->6|37->6|38->7|38->7|39->8|41->10
                   -- GENERATED --
               */
           

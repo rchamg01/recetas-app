@@ -1,0 +1,1475 @@
+2021-02-17 13:28:18,467 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-16 - Database [default] initialized
+2021-02-17 13:28:18,472 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-16 - Creating Pool for datasource 'default'
+2021-02-17 13:28:19,684 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-16 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 13:28:19,725 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-16 - Application started (Dev) (no global state)
+2021-02-17 13:28:20,496 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7in860e4d - Internal server error, for (GET) [/recetas/search/id/4] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaId(RecetasController.java:240)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$12(Routes.scala:257)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted
+2021-02-17 13:30:32,389 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-7 - 
+
+! @7in86817b - Internal server error, for (GET) [/recetas/search/nombre/Cocido%20de%20garbanzos] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[NonUniqueResultException: Unique expecting 0 or 1 results but got [3]]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: javax.persistence.NonUniqueResultException: Unique expecting 0 or 1 results but got [3]
+	at io.ebeaninternal.server.core.DefaultServer.extractUnique(DefaultServer.java:1268)
+	at io.ebeaninternal.server.core.DefaultServer.findOne(DefaultServer.java:1260)
+	at io.ebeaninternal.server.querydefn.DefaultOrmQuery.findOne(DefaultOrmQuery.java:1508)
+	at io.ebeaninternal.server.expression.DefaultExpressionList.findOne(DefaultExpressionList.java:453)
+	at models.Receta.findByName(Receta.java:53)
+	at controllers.RecetasController.getRecetaNombre(RecetasController.java:199)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:250)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+2021-02-17 13:31:52,417 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-9 - 
+
+! @7in86cfhc - Internal server error, for (GET) [/recetas/search/nombre/Cocido%20de%20garbanzos%202] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaNombre(RecetasController.java:214)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:250)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted
+2021-02-17 13:35:54,231 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-11 - Shutting down connection pool.
+2021-02-17 13:35:54,459 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-36 - Database [default] initialized
+2021-02-17 13:35:54,459 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-36 - Creating Pool for datasource 'default'
+2021-02-17 13:35:54,711 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-36 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 13:35:54,720 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-36 - Application started (Dev) (no global state)
+2021-02-17 13:35:54,797 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7in870a5j - Internal server error, for (GET) [/recetas/search/nombre/Cocido%20de%20garbanzos%202] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaNombre(RecetasController.java:214)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:250)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted
+2021-02-17 17:08:29,868 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 17:08:30,089 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-61 - Database [default] initialized
+2021-02-17 17:08:30,089 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-61 - Creating Pool for datasource 'default'
+2021-02-17 17:08:30,326 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-61 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:08:30,338 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-61 - Application started (Dev) (no global state)
+2021-02-17 17:09:04,853 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 17:09:05,062 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-61 - Database [default] initialized
+2021-02-17 17:09:05,062 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-61 - Creating Pool for datasource 'default'
+2021-02-17 17:09:05,283 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-61 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:09:05,289 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-61 - Application started (Dev) (no global state)
+2021-02-17 17:39:39,456 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 17:39:39,669 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-74 - Database [default] initialized
+2021-02-17 17:39:39,669 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-74 - Creating Pool for datasource 'default'
+2021-02-17 17:39:39,905 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-74 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:39:39,914 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-74 - Application started (Dev) (no global state)
+2021-02-17 17:40:56,225 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 17:40:56,427 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-77 - Database [default] initialized
+2021-02-17 17:40:56,427 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-77 - Creating Pool for datasource 'default'
+2021-02-17 17:40:56,686 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-77 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:40:56,699 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-77 - Application started (Dev) (no global state)
+2021-02-17 17:47:08,289 [ERROR] from play.api.http.DefaultHttpErrorHandler in play-dev-mode-akka.actor.default-dispatcher-86 - 
+
+! @7in9e0041 - Internal server error, for (GET) [/recetas/list] ->
+ 
+play.sbt.PlayExceptions$CompilationException: Compilation error[value deleteIngrediente is not a member of controllers.RecetasController]
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at scala.Option.map(Option.scala:230)
+	at play.sbt.run.PlayReload$.$anonfun$taskFailureHandler$1(PlayReload.scala:40)
+	at scala.Option.map(Option.scala:230)
+	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:35)
+	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:28)
+	at play.sbt.run.PlayReload$.$anonfun$compile$3(PlayReload.scala:63)
+	at scala.util.Either$LeftProjection.map(Either.scala:573)
+	at play.sbt.run.PlayReload$.compile(PlayReload.scala:63)
+	at play.sbt.run.PlayRun$.$anonfun$playRunTask$4(PlayRun.scala:78)
+	at play.runsupport.Reloader.$anonfun$reload$1(Reloader.scala:496)
+	at play.runsupport.Reloader$$anon$1.run(Reloader.scala:57)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:63)
+	at play.runsupport.Reloader.reload(Reloader.scala:496)
+	at play.core.server.DevServerStart$$anon$1.get(DevServerStart.scala:141)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:302)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:224)
+	at akka.stream.impl.fusing.MapAsync$$anon$30.onPush(Ops.scala:1284)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:541)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:423)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:625)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:502)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:600)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:769)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:784)
+	at akka.actor.Actor.aroundReceive(Actor.scala:537)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:535)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:691)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:577)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:547)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:270)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:231)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:243)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+2021-02-17 17:47:32,074 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 17:47:32,260 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-85 - Database [default] initialized
+2021-02-17 17:47:32,260 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-85 - Creating Pool for datasource 'default'
+2021-02-17 17:47:32,501 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-85 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:47:32,506 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-85 - Application started (Dev) (no global state)
+2021-02-17 17:49:12,202 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 17:49:12,378 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-95 - Database [default] initialized
+2021-02-17 17:49:12,378 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-95 - Creating Pool for datasource 'default'
+2021-02-17 17:49:12,596 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-95 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 17:49:12,602 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-95 - Application started (Dev) (no global state)
+2021-02-17 18:24:22,031 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 18:24:22,248 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-106 - Database [default] initialized
+2021-02-17 18:24:22,249 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-106 - Creating Pool for datasource 'default'
+2021-02-17 18:24:22,475 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-106 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 18:24:22,479 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-106 - Application started (Dev) (no global state)
+2021-02-17 18:35:59,687 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 18:36:00,156 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-120 - Database [default] initialized
+2021-02-17 18:36:00,156 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-120 - Creating Pool for datasource 'default'
+2021-02-17 18:36:00,365 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-120 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 18:36:00,368 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-120 - Application started (Dev) (no global state)
+2021-02-17 18:59:08,733 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 18:59:08,902 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-131 - Database [default] initialized
+2021-02-17 18:59:08,902 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-131 - Creating Pool for datasource 'default'
+2021-02-17 18:59:09,115 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-131 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 18:59:09,118 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-131 - Application started (Dev) (no global state)
+2021-02-17 19:00:30,341 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 19:00:30,469 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-131 - Database [default] initialized
+2021-02-17 19:00:30,469 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-131 - Creating Pool for datasource 'default'
+2021-02-17 19:00:30,687 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-131 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 19:00:30,691 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-131 - Application started (Dev) (no global state)
+2021-02-17 19:12:03,969 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 19:12:04,174 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-152 - Database [default] initialized
+2021-02-17 19:12:04,174 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-152 - Creating Pool for datasource 'default'
+2021-02-17 19:12:04,425 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-152 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 19:12:04,429 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-152 - Application started (Dev) (no global state)
+2021-02-17 20:23:51,532 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-9 - Shutting down connection pool.
+2021-02-17 20:23:51,845 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-163 - Database [default] initialized
+2021-02-17 20:23:51,845 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-163 - Creating Pool for datasource 'default'
+2021-02-17 20:23:52,092 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-163 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:23:52,096 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-163 - Application started (Dev) (no global state)
+2021-02-17 20:23:52,158 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7ina8f18j - Internal server error, for (GET) [/recetas/search/id/5] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaId(RecetasController.java:236)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$15(Routes.scala:268)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted
+2021-02-17 20:30:20,754 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 20:30:21,624 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-173 - Database [default] initialized
+2021-02-17 20:30:21,625 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-173 - Creating Pool for datasource 'default'
+2021-02-17 20:30:21,874 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-173 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:30:21,877 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-173 - Application started (Dev) (no global state)
+2021-02-17 20:30:21,935 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7ina9b5o4 - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:265)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:30:48,646 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-7 - 
+
+! @7ina9cjbd - Internal server error, for (GET) [/recetas/search/id/5] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaId(RecetasController.java:238)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$15(Routes.scala:268)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted
+2021-02-17 20:31:01,327 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-7 - 
+
+! @7ina9dc55 - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:265)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:38:54,993 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 20:38:55,525 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-185 - Database [default] initialized
+2021-02-17 20:38:55,526 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-185 - Creating Pool for datasource 'default'
+2021-02-17 20:38:55,741 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-185 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:38:55,745 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-185 - Application started (Dev) (no global state)
+2021-02-17 20:38:55,810 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7inaaec2f - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:265)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:39:52,068 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 20:39:52,533 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-194 - Database [default] initialized
+2021-02-17 20:39:52,533 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-194 - Creating Pool for datasource 'default'
+2021-02-17 20:39:52,786 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-194 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:39:52,789 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-194 - Application started (Dev) (no global state)
+2021-02-17 20:39:52,838 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7inaahibp - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:266)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:40:15,005 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-7 - 
+
+! @7inaaip6e - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:266)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:40:51,141 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-8 - Shutting down connection pool.
+2021-02-17 20:40:51,558 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-185 - Database [default] initialized
+2021-02-17 20:40:51,558 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-185 - Creating Pool for datasource 'default'
+2021-02-17 20:40:51,762 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-185 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:40:51,766 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-185 - Application started (Dev) (no global state)
+2021-02-17 20:40:51,816 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7inaal1i8 - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:266)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-17 20:41:24,263 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 20:41:24,648 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-185 - Database [default] initialized
+2021-02-17 20:41:24,648 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-185 - Creating Pool for datasource 'default'
+2021-02-17 20:41:24,866 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-185 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:41:24,869 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-185 - Application started (Dev) (no global state)
+2021-02-17 20:41:24,937 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7inaamoi5 - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:265)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.transformWith$extension(FastFuture.scala:55)
+	at akka.http.scaladsl.util.FastFuture$.flatMap$extension(FastFuture.scala:26)
+	at play.core.server.AkkaHttpServer.runAction(AkkaHttpServer.scala:415)
+	at play.core.server.AkkaHttpServer.executeHandler(AkkaHttpServer.scala:360)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:323)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:224)
+	at akka.stream.impl.fusing.MapAsync$$anon$30.onPush(Ops.scala:1284)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:541)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:423)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:625)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:502)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:600)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:769)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:784)
+	at akka.actor.Actor.aroundReceive(Actor.scala:537)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:535)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:691)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:577)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:547)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:270)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:231)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:243)
+	... 4 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 58 common frames omitted
+2021-02-17 20:54:15,680 [ERROR] from play.api.http.DefaultHttpErrorHandler in play-dev-mode-akka.actor.default-dispatcher-204 - 
+
+! @7inacekk1 - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.sbt.PlayExceptions$CompilationException: Compilation error[package org.jetbrains.annotations does not exist]
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at scala.Option.map(Option.scala:230)
+	at play.sbt.run.PlayReload$.$anonfun$taskFailureHandler$1(PlayReload.scala:40)
+	at scala.Option.map(Option.scala:230)
+	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:35)
+	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:28)
+	at play.sbt.run.PlayReload$.$anonfun$compile$3(PlayReload.scala:63)
+	at scala.util.Either$LeftProjection.map(Either.scala:573)
+	at play.sbt.run.PlayReload$.compile(PlayReload.scala:63)
+	at play.sbt.run.PlayRun$.$anonfun$playRunTask$4(PlayRun.scala:78)
+	at play.runsupport.Reloader.$anonfun$reload$1(Reloader.scala:496)
+	at play.runsupport.Reloader$$anon$1.run(Reloader.scala:57)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:63)
+	at play.runsupport.Reloader.reload(Reloader.scala:496)
+	at play.core.server.DevServerStart$$anon$1.get(DevServerStart.scala:141)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:302)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:224)
+	at akka.stream.impl.fusing.MapAsync$$anon$30.onPush(Ops.scala:1284)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:541)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:423)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:625)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:502)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:600)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:769)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:784)
+	at akka.actor.Actor.aroundReceive(Actor.scala:537)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:535)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:691)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:577)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:547)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:270)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:231)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:243)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+2021-02-17 20:54:30,889 [INFO] from play.api.db.HikariCPConnectionPool in application-akka.actor.internal-dispatcher-7 - Shutting down connection pool.
+2021-02-17 20:54:31,340 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-209 - Database [default] initialized
+2021-02-17 20:54:31,340 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-209 - Creating Pool for datasource 'default'
+2021-02-17 20:54:31,564 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-209 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+
+2021-02-17 20:54:31,568 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-209 - Application started (Dev) (no global state)
+2021-02-17 20:54:31,634 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-6 - 
+
+! @7inacfibk - Internal server error, for (GET) [/recetas/search/tiempo/45] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1901)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1870)
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:126)
+	at play.mvc.Results.ok(Results.java:513)
+	at controllers.RecetasController.getRecetaTiempo(RecetasController.java:265)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$9(Routes.scala:254)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serializeContents(CollectionSerializer.java:145)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serialize(CollectionSerializer.java:107)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serialize(CollectionSerializer.java:25)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.SerializerProvider.defaultSerializeValue(SerializerProvider.java:1033)
+	at com.fasterxml.jackson.databind.node.POJONode.serialize(POJONode.java:115)
+	at com.fasterxml.jackson.databind.node.ArrayNode.serialize(ArrayNode.java:180)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:328)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at play.mvc.StatusHeader.sendJson(StatusHeader.java:1894)
+	... 45 common frames omitted
+2021-02-18 01:44:10,501 [ERROR] from play.api.http.DefaultHttpErrorHandler in application-akka.actor.default-dispatcher-7 - 
+
+! @7inbogclk - Internal server error, for (GET) [/recetas/search/id/4] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:359)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:261)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:430)
+	at play.core.server.AkkaHttpServer$$anonfun$2.applyOrElse(AkkaHttpServer.scala:422)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:56)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:93)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:93)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:48)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+Caused by: java.lang.RuntimeException: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at play.libs.Json.toJson(Json.java:94)
+	at controllers.RecetasController.getRecetaId(RecetasController.java:238)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$15(Routes.scala:268)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:150)
+	at play.core.routing.HandlerInvokerFactory$$anon$8.resultCall(HandlerInvoker.scala:149)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$3$$anon$4$$anon$5.invocation(HandlerInvoker.scala:115)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:119)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:33)
+	at play.core.j.JavaAction.$anonfun$apply$8(JavaAction.scala:175)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:661)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:430)
+	at play.core.j.HttpExecutionContext.$anonfun$execute$1(HttpExecutionContext.scala:64)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:59)
+	at scala.concurrent.impl.Promise$Transformation.submitWithValue(Promise.scala:392)
+	at scala.concurrent.impl.Promise$DefaultPromise.submitWithValue(Promise.scala:302)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallbacks(Promise.scala:276)
+	at scala.concurrent.impl.Promise$DefaultPromise.map(Promise.scala:146)
+	at scala.concurrent.Future$.apply(Future.scala:661)
+	at play.core.j.JavaAction.apply(JavaAction.scala:176)
+	at play.api.mvc.Action.$anonfun$apply$4(Action.scala:82)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:168)
+	at scala.util.Try$.apply(Try.scala:210)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:168)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:85)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:199)
+	at play.core.server.AkkaHttpServer.$anonfun$runAction$4(AkkaHttpServer.scala:417)
+	at akka.http.scaladsl.util.FastFuture$.strictTransform$1(FastFuture.scala:41)
+	at akka.http.scaladsl.util.FastFuture$.$anonfun$transformWith$3(FastFuture.scala:51)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:447)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2978)
+	at play.libs.Json.toJson(Json.java:92)
+	... 41 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class io.ebeaninternal.server.transaction.DefaultPersistenceContext and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Receta["ingredientes"]->io.ebean.common.BeanList[0]->models.Ingrediente["_ebean_intercept"]->io.ebean.bean.EntityBeanIntercept["persistenceContext"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1191)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:404)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71)
+	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serializeContents(CollectionSerializer.java:145)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serialize(CollectionSerializer.java:107)
+	at com.fasterxml.jackson.databind.ser.std.CollectionSerializer.serialize(CollectionSerializer.java:25)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:727)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:722)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:166)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:2804)
+	at com.fasterxml.jackson.databind.ObjectMapper.valueToTree(ObjectMapper.java:2973)
+	... 42 common frames omitted

@@ -2,6 +2,7 @@
 <receta>
     <nombre>@receta.getNombre</nombre>
     <tiempo>@receta.getTiempo</tiempo>
+    <tipo>@receta.getTipo</tipo>
     @for(u <- ingredientes) {
     @ingrediente(u)
     }

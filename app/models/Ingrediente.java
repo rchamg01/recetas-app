@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
@@ -19,7 +20,8 @@ public class Ingrediente extends Model {
     private String nombre;
 
     @ManyToMany(mappedBy = "ingredientes")
-    List<Receta> listaRecetas; //relacion mn
+    @JsonIgnore
+    private List<Receta> listaRecetas; //relacion mn
 
     public static final Finder<Long, Ingrediente> find = new Finder<>(Ingrediente.class);
 
