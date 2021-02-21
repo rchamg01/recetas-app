@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Wed Feb 17 17:47:29 CET 2021
+// @DATE:Sat Feb 20 01:41:47 CET 2021
 
 import play.api.routing.JavaScriptReverseRoute
 
@@ -19,16 +19,6 @@ package controllers.javascript {
     }
 
   
-    // @LINE:14
-    def updateReceta: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.RecetasController.updateReceta",
-      """
-        function() {
-          return _wA({method:"PUT", url:"""" + _prefix + { _defaultPrefix } + """" + "recetas/"})
-        }
-      """
-    )
-  
     // @LINE:10
     def getRecetaNombre: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.getRecetaNombre",
@@ -39,12 +29,22 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:13
+    // @LINE:14
     def getListaRecetas: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.getListaRecetas",
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "recetas/list"})
+        }
+      """
+    )
+  
+    // @LINE:17
+    def updateReceta: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RecetasController.updateReceta",
+      """
+        function() {
+          return _wA({method:"PUT", url:"""" + _prefix + { _defaultPrefix } + """" + "recetas/"})
         }
       """
     )
@@ -60,6 +60,26 @@ package controllers.javascript {
     )
   
     // @LINE:16
+    def getIngredienteNombre: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RecetasController.getIngredienteNombre",
+      """
+        function(nombre0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "ingredientes/search/nombre/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("nombre", nombre0))})
+        }
+      """
+    )
+  
+    // @LINE:18
+    def updateIngrediente: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RecetasController.updateIngrediente",
+      """
+        function() {
+          return _wA({method:"PUT", url:"""" + _prefix + { _defaultPrefix } + """" + "ingredientes/"})
+        }
+      """
+    )
+  
+    // @LINE:19
     def deleteReceta: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RecetasController.deleteReceta",
       """
@@ -99,9 +119,19 @@ package controllers.javascript {
       """
     )
   
+    // @LINE:15
+    def getIngredienteId: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RecetasController.getIngredienteId",
+      """
+        function(id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "ingredientes/search/id/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[Long]].javascriptUnbind + """)("id", id0))})
+        }
+      """
+    )
+  
   }
 
-  // @LINE:20
+  // @LINE:23
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -109,7 +139,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:20
+    // @LINE:23
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """

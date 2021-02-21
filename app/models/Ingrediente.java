@@ -1,6 +1,7 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
@@ -11,6 +12,11 @@ import javax.persistence.ManyToMany;
 import java.util.List;
 
 @Entity
+//@JsonIgnoreProperties
+//@JsonSerialize
+//@JsonIdentityInfo(
+  //      generator = ObjectIdGenerators.PropertyGenerator.class,
+    //    property = "id")
 public class Ingrediente extends Model {
 
     @Id
@@ -20,7 +26,6 @@ public class Ingrediente extends Model {
     private String nombre;
 
     @ManyToMany(mappedBy = "ingredientes")
-    @JsonIgnore
     private List<Receta> listaRecetas; //relacion mn
 
     public static final Finder<Long, Ingrediente> find = new Finder<>(Ingrediente.class);
@@ -41,14 +46,7 @@ public class Ingrediente extends Model {
         this.id = id;
     }
 
-    /*public void setListaIngredientes(ArrayList<Ingrediente> ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    public ArrayList<Ingrediente> getListaIngredientes() {
-        return ingredientes;
-    }*/
-
+    @JsonBackReference
     public List<Receta> getRecetas() {
         return listaRecetas;
     }
@@ -57,16 +55,8 @@ public class Ingrediente extends Model {
         this.listaRecetas = recetas;
     }
 
-    /*public Ingrediente getIngrediente(int index){
-        return ingredientes.get(index);
-    }
-
-    public void addIngrediente(Ingrediente ingrediente){
-        ingredientes.add(ingrediente);
-    }*/
-
     public static Ingrediente findByNombre(String nombreIngrediente) {
-        return find.query().where().eq("nombre", nombreIngrediente).findOne();
+        return find.query().where().icontains("nombre", nombreIngrediente).findOne();
     }
 
     public static Ingrediente findById(Long id) {
