@@ -2,12 +2,8 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Descripcion;
-import models.Ingrediente;
-import models.Receta;
-import models.Usuario;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
@@ -17,21 +13,16 @@ import play.mvc.Result;
 import play.mvc.Results;
 
 import javax.inject.Inject;
-import java.util.List;
-
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
 
 public class DescripcionController extends Controller {
 
     @Inject
     FormFactory formFactory;
 
-    public Result updateDescripcion(Http.Request request) { //en el body es necesario pasarle la id de la receta original
+    public Result updateDescripcion(Http.Request request) {
 
         Form<Descripcion> form = formFactory.form(Descripcion.class).bindFromRequest(request);
+        ObjectNode res = Json.newObject();
 
         if(form.hasErrors()){
             return Results.badRequest(form.errorsAsJson());
@@ -39,11 +30,13 @@ public class DescripcionController extends Controller {
 
         Descripcion descripcion = form.get();
         if(descripcion.getId() == null){
-            return Results.status(409);
+            res.put("success", false).put("message", "Es necesario indicar el id de la descripción");
+            return status(409).sendJson(res); //conflicto
         }
 
         if(Descripcion.findById(descripcion.getId()) == null){ //si no existe en la bd
-            return Results.status(404);
+            res.put("success", false).put("message", "Descripción no encontrada");
+            return status(404).sendJson(res); //conflicto
         }
 
         descripcion.update(); //se actualiza descripcion

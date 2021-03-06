@@ -22,11 +22,6 @@ import play.mvc.Results;
 import javax.inject.Inject;
 import java.util.List;
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
-
 public class RecetasController extends Controller {
 
     @Inject
@@ -52,47 +47,7 @@ public class RecetasController extends Controller {
 
         */
 
-            Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
 
-            if(form.hasErrors()){
-                return Results.badRequest(form.errorsAsJson());
-            } else {
-
-                Receta rAux = form.get(); //se crea una receta donde se recoge los datos de la request
-                List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
-                Usuario usuario = rAux.getUsuario();
-                Descripcion descripcion = rAux.getDescripcion();
-                Receta receta = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
-
-                //se añaden los atributos "unicos" al objeto vacio
-                receta.setNombre(rAux.getNombre());
-                receta.setTiempo(rAux.getTiempo());
-                receta.setTipo(rAux.getTipo());
-
-                if(Usuario.findByNombre(usuario.getNombre()) == null){ //no esta en la bd
-                    receta.setUsuario(rAux.getUsuario());
-                    usuario.save();
-                }else{ //está en la bd
-                    Usuario uAux = Usuario.findByNombre(usuario.getNombre());
-                    receta.setUsuario(uAux);
-                }
-
-                receta.setDescripcion(rAux.getDescripcion());
-                descripcion.save();
-
-                for(Ingrediente ingrediente: iAux){
-                    if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd
-                        ingrediente.save();
-                        receta.addIngrediente(ingrediente);
-                    }else{ //si esta
-                        Ingrediente ingredienteAux = Ingrediente.findByNombre(ingrediente.getNombre());
-                        receta.addIngrediente(ingredienteAux);
-                    }
-                }
-                receta.save(); //se guarda la receta en la base de datos
-            }
-
-            return Results.ok();
         /*
         *
         *
@@ -124,29 +79,63 @@ public class RecetasController extends Controller {
         *
         * */
 
-        /////////////////////////////////////// IGNORAR: SON APUNTES ////////////////////////////////////////////////7
 
-            //String res ="{\"success\": true, \"message\": \"El usuario ha sido añadido\"}"; //forma rudimentara e incorrecta de crear una respuesta json
+        Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
 
-            /*ObjectNode node = Json.newObject(); // {} forma adecuada pero no mejor de crear un objeto json de respuesta
-            node.put("success", true);
-            node.put("message", "La receta ha sido añadida");*/
+        if(form.hasErrors()){
+            return Results.badRequest(form.errorsAsJson());
+        } else {
 
-           /* RespuestaCreacionUsuario res = new RespuestaCreacionUsuario(); //buena forma
-            res.setMessage("La receta ha sido creada");
-            res.setSuccess(true);
-            JsonNode json = Json.toJson(res);*/
+            Receta rAux = form.get(); //se crea una receta donde se recoge los datos de la request
+            List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
+            Usuario usuario = rAux.getUsuario();
+            Descripcion descripcion = rAux.getDescripcion();
+            Receta receta = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
 
+            //se añaden los atributos "unicos" al objeto vacio
+            receta.setNombre(rAux.getNombre());
+            receta.setTiempo(rAux.getTiempo());
+            receta.setTipo(rAux.getTipo());
+
+            if(Usuario.findByNombre(usuario.getNombre()) == null){ //no esta en la bd
+                receta.setUsuario(rAux.getUsuario());
+                usuario.save();
+            }else{ //está en la bd
+                Usuario uAux = Usuario.findByNombre(usuario.getNombre());
+                receta.setUsuario(uAux);
+            }
+
+            receta.setDescripcion(rAux.getDescripcion());
+            descripcion.save();
+
+            for(Ingrediente ingrediente: iAux){
+                if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd
+                    ingrediente.save();
+                    receta.addIngrediente(ingrediente);
+                }else{ //si esta
+                    Ingrediente ingredienteAux = Ingrediente.findByNombre(ingrediente.getNombre());
+                    receta.addIngrediente(ingredienteAux);
+                }
+            }
+            receta.save(); //se guarda la receta en la base de datos
+        }
+
+        ObjectNode node = Json.newObject();
+        node.put("success", true);
+        node.put("message", "La receta ha sido añadida");
+
+        return Results.ok(node);
 
     }
 
-    //terminado (no detecta usuario en json)
     public Result getRecetaNombre(Http.Request request, String nombre) {
 
         List<Receta> recetas = Receta.findByName(nombre);
+        ObjectNode res = Json.newObject();
 
         if(recetas.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -159,17 +148,20 @@ public class RecetasController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
-    //terminado
     public Result getRecetaId(Http.Request request, Long id) {
 
         Receta receta = Receta.findById(id);
+        ObjectNode res = Json.newObject();
 
         if(receta == null) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -180,17 +172,20 @@ public class RecetasController extends Controller {
             JsonNode node = toJson(receta);
             return ok(node);
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
-    //terminado
+
     public Result getRecetaTiempo(Http.Request request, String tiempo) {
 
         List<Receta> recetas = Receta.findByTime(tiempo);
+        ObjectNode res = Json.newObject();
 
         if(recetas.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -203,16 +198,19 @@ public class RecetasController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
-    //terminado
+
     public Result getRecetaTipo(Http.Request request, String tipo) {
 
         List<Receta> recetas = Receta.findByTipo(tipo);
+        ObjectNode res = Json.newObject();
 
         if(recetas.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -225,17 +223,20 @@ public class RecetasController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
-    //terminado
     public Result getRecetaIngredienteId(Http.Request request, Long id) {
 
         Ingrediente ingrediente = Ingrediente.findById(id);
+        ObjectNode res = Json.newObject();
 
         if(ingrediente == null) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         List<Receta> recetas = ingrediente.getRecetas();
@@ -248,17 +249,20 @@ public class RecetasController extends Controller {
             JsonNode node = toJson(recetas);
             return ok(node);
         }
-        return Results.status(415); //Unsupported Media Type
+
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
-    //terminado
     public Result getRecetaUsuarioId(Http.Request request, Long id) {
 
         Usuario usuario = Usuario.findById(id);
+        ObjectNode res = Json.newObject();
 
         if(usuario == null) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         List<Receta> recetas = usuario.getRecetas();
@@ -271,17 +275,20 @@ public class RecetasController extends Controller {
             JsonNode node = toJson(recetas);
             return ok(node);
         }
-        return Results.status(415); //Unsupported Media Type
+
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
-    //terminado
     public Result getListaRecetas(Http.Request request) {
 
         List<Receta> recetas = Receta.findAll();
+        ObjectNode res = Json.newObject();
 
         if(recetas.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -294,28 +301,33 @@ public class RecetasController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
     public Result deleteReceta(Long id) {
 
         Receta receta = Receta.findById(id);
+        ObjectNode res = Json.newObject();
 
         if (receta == null) { //si no existe (la busqueda devolvio null)
-            return Results.status(404); //not found
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }else{
             System.out.println("Receta " + id + " eliminada");
             receta.delete();
-            return Results.ok();
+            res.put("success", true).put("message", "Receta eliminada correctamente.");
+            return Results.ok(res);
         }
 
     }
 
-    //error en la respuesta json
     public Result updateReceta(Http.Request request) { //en el body es necesario pasarle la id de la receta original
 
         Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
+        ObjectNode res = Json.newObject();
 
         if(form.hasErrors()){
             return Results.badRequest(form.errorsAsJson());
@@ -323,11 +335,13 @@ public class RecetasController extends Controller {
 
         Receta rAux = form.get();
         if(rAux.getId() == null){
-            return Results.status(409);
+            res.put("success", false).put("message", "Es necesario indicar el id de la receta");
+            return status(409).sendJson(res); //conflicto
         }
 
         if(Receta.findById(rAux.getId()) == null){ //si no existe en la bd
-            return Results.status(404);
+            res.put("success", false).put("message", "Receta no encontrada");
+            return status(404).sendJson(res); //not found
         }
 
         List<Ingrediente> ingredientes = rAux.getIngredientes();
@@ -387,28 +401,4 @@ public class RecetasController extends Controller {
         return result;
     }
 
-}
-
-class RespuestaCreacionUsuario {
-    //@JsonProperty("is_success") //para que aparezca otro nombre en vez de success
-    private boolean success;
-
-    //@JsonIgnore para ignorar atributos
-    private String message;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 }

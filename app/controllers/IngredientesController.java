@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Ingrediente;
-import models.Receta;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
@@ -17,11 +16,6 @@ import play.mvc.Results;
 import javax.inject.Inject;
 import java.util.List;
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
-
 public class IngredientesController extends Controller {
 
     @Inject
@@ -30,9 +24,11 @@ public class IngredientesController extends Controller {
     public Result getIngredienteId(Http.Request request, Long id) {
 
         Ingrediente ingrediente = Ingrediente.findById(id);
+        ObjectNode res = Json.newObject();
 
         if(ingrediente == null) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Ingrediente no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -45,16 +41,19 @@ public class IngredientesController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
     public Result getIngredienteNombre(Http.Request request, String nombre) {
 
         List<Ingrediente> ingredientes = Ingrediente.findListaByNombre(nombre);
+        ObjectNode res = Json.newObject();
 
         if(ingredientes.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Ingrediente no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -67,13 +66,15 @@ public class IngredientesController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
     public Result updateIngrediente(Http.Request request) { //en el body es necesario pasarle la id de la receta original
 
         Form<Ingrediente> form = formFactory.form(Ingrediente.class).bindFromRequest(request);
+        ObjectNode res = Json.newObject();
 
         if(form.hasErrors()){
             return Results.badRequest(form.errorsAsJson());
@@ -81,30 +82,18 @@ public class IngredientesController extends Controller {
 
         Ingrediente ingrediente = form.get();
         if(ingrediente.getId() == null){
-            return Results.status(409);
+            res.put("success", false).put("message", "Es necesario indicar el id del ingrediente");
+            return status(409).sendJson(res); //conflicto
         }
 
         if(Ingrediente.findById(ingrediente.getId()) == null){ //si no existe en la bd
-            return Results.status(404);
+            res.put("success", false).put("message", "Ingrediente no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
         ingrediente.update(); //se actualiza ingrdiente
         return ok(toJson(ingrediente));
 
-    }
-
-    public static JsonNode toJson(Receta receta) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode recetaNode = mapper.valueToTree(receta);
-        return mapper.createObjectNode().set("receta", recetaNode);
-    }
-
-    public static JsonNode toJson(List<Receta> recetas) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = Json.newObject();
-        ArrayNode recetasNode = mapper.valueToTree(recetas);
-        result.putArray("recetas").addAll(recetasNode);
-        return result;
     }
 
     public static JsonNode toJson(Ingrediente ingrediente) {

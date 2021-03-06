@@ -1,0 +1,4 @@
+@(descripcion: Descripcion)
+<descripcion>
+    <texto>@descripcion.getTexto()</texto>
+</descripcion>

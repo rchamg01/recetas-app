@@ -1,1 +1,27 @@
-[debug] Jar uptodate: E:\universidad\MASTER\cloud\recetas-app\target\scala-2.13\play-java-hello-world-tutorial_2.13-1.0-SNAPSHOT-sources.jar
+[debug] Packaging E:\universidad\MASTER\cloud\recetas-app\target\scala-2.13\recetas-app_2.13-1.0-SNAPSHOT-sources.jar ...
+[debug] Input file mappings:
+[debug] 	application.conf
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\conf\application.conf
+[debug] 	logback.xml
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\conf\logback.xml
+[debug] 	routes
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\conf\routes
+[debug] 	evolutions\default\1.sql
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\conf\evolutions\default\1.sql
+[debug] 	controllers\DescripcionController.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\controllers\DescripcionController.java
+[debug] 	controllers\IngredientesController.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\controllers\IngredientesController.java
+[debug] 	controllers\RecetasController.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\controllers\RecetasController.java
+[debug] 	controllers\UsuariosController.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\controllers\UsuariosController.java
+[debug] 	models\Descripcion.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\models\Descripcion.java
+[debug] 	models\Ingrediente.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\models\Ingrediente.java
+[debug] 	models\Receta.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\models\Receta.java
+[debug] 	models\Usuario.java
+[debug] 	  E:\universidad\MASTER\cloud\recetas-app\app\models\Usuario.java
+[debug] Done packaging.

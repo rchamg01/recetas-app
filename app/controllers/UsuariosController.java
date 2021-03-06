@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Descripcion;
-import models.Ingrediente;
-import models.Receta;
 import models.Usuario;
 import play.data.Form;
 import play.data.FormFactory;
@@ -19,11 +16,6 @@ import play.mvc.Results;
 import javax.inject.Inject;
 import java.util.List;
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
-
 public class UsuariosController extends Controller {
 
     @Inject
@@ -32,9 +24,11 @@ public class UsuariosController extends Controller {
     public Result getUsuarioNombre(Http.Request request, String nombre) {
 
         List<Usuario> usuarios = Usuario.findListaByNombre(nombre);
+        ObjectNode res = Json.newObject();
 
         if(usuarios.isEmpty()) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Usuario no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -47,16 +41,19 @@ public class UsuariosController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
     public Result getUsuarioId(Http.Request request, Long id) {
 
         Usuario usuario = Usuario.findById(id);
+        ObjectNode res = Json.newObject();
 
         if(usuario == null) {
-            return status(404); //not found
+            res.put("success", false).put("message", "Usuario no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
         if (request.accepts("application/xml")) {
@@ -69,13 +66,15 @@ public class UsuariosController extends Controller {
             return ok(node);
 
         }
-        return Results.status(415); //Unsupported Media Type
+        res.put("success", false).put("message", "Formato de respuesta no soportado.");
+        return Results.status(415).sendJson(res); //Unsupported Media Type
 
     }
 
     public Result updateUsuario(Http.Request request) { //en el body es necesario pasarle la id de la receta original
 
         Form<Usuario> form = formFactory.form(Usuario.class).bindFromRequest(request);
+        ObjectNode res = Json.newObject();
 
         if(form.hasErrors()){
             return Results.badRequest(form.errorsAsJson());
@@ -83,14 +82,16 @@ public class UsuariosController extends Controller {
 
         Usuario usuario = form.get();
         if(usuario.getId() == null){
-            return Results.status(409);
+            res.put("success", false).put("message", "Es necesario indicar el id del usuario");
+            return status(409).sendJson(res); //conflicto
         }
 
-        if(Ingrediente.findById(usuario.getId()) == null){ //si no existe en la bd
-            return Results.status(404);
+        if(Usuario.findById(usuario.getId()) == null){ //si no existe en la bd
+            res.put("success", false).put("message", "Usuario no encontrado");
+            return status(404).sendJson(res); //not found
         }
 
-        usuario.update(); //se actualiza ingrdiente
+        usuario.update(); //se actualiza usuario
         return ok(toJson(usuario));
 
     }
