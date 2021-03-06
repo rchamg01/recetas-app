@@ -62,34 +62,34 @@ public class RecetasController extends Controller {
                 List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
                 Usuario usuario = rAux.getUsuario();
                 Descripcion descripcion = rAux.getDescripcion();
-                Receta rf = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
+                Receta receta = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
 
                 //se añaden los atributos "unicos" al objeto vacio
-                rf.setNombre(rAux.getNombre());
-                rf.setTiempo(rAux.getTiempo());
-                rf.setTipo(rAux.getTipo());
+                receta.setNombre(rAux.getNombre());
+                receta.setTiempo(rAux.getTiempo());
+                receta.setTipo(rAux.getTipo());
 
                 if(Usuario.findByNombre(usuario.getNombre()) == null){ //no esta en la bd
-                    rf.setUsuario(rAux.getUsuario());
+                    receta.setUsuario(rAux.getUsuario());
                     usuario.save();
                 }else{ //está en la bd
                     Usuario uAux = Usuario.findByNombre(usuario.getNombre());
-                    rf.setUsuario(uAux);
+                    receta.setUsuario(uAux);
                 }
 
-                rf.setDescripcion(rAux.getDescripcion());
+                receta.setDescripcion(rAux.getDescripcion());
                 descripcion.save();
 
                 for(Ingrediente ingrediente: iAux){
                     if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd
                         ingrediente.save();
-                        rf.addIngrediente(ingrediente);
+                        receta.addIngrediente(ingrediente);
                     }else{ //si esta
                         Ingrediente ingredienteAux = Ingrediente.findByNombre(ingrediente.getNombre());
-                        rf.addIngrediente(ingredienteAux);
+                        receta.addIngrediente(ingredienteAux);
                     }
                 }
-                rf.save(); //se guarda la receta en la base de datos
+                receta.save(); //se guarda la receta en la base de datos
             }
 
             return Results.ok();
@@ -332,36 +332,45 @@ public class RecetasController extends Controller {
 
         List<Ingrediente> ingredientes = rAux.getIngredientes();
         Usuario usuario = rAux.getUsuario();
-        Receta rf =  new Receta();
+        Descripcion descripcion = rAux.getDescripcion();
+        Receta receta =  new Receta();
 
-        rf.setNombre(rAux.getNombre());
-        rf.setTiempo(rAux.getTiempo());
-        rf.setTipo(rAux.getTipo());
+        receta.setNombre(rAux.getNombre());
+        receta.setTiempo(rAux.getTiempo());
+        receta.setTipo(rAux.getTipo());
 
         if(Usuario.findByNombre(usuario.getNombre()) != null){ //si el usuario que se quiere añadir está en la bd
             Usuario uAux = Usuario.findByNombre(usuario.getNombre()); //se guarda
             usuario.setId(uAux.getId()); //se guarda la id
-            rf.setUsuario(usuario); //se añade a la receta
+            receta.setUsuario(usuario); //se añade a la receta
         }else{ //si no esta en la bd
-            rf.setUsuario(usuario); //se añade a la receta
+            receta.setUsuario(usuario); //se añade a la receta
             usuario.save(); //se guarda
+        }
+
+        if(Descripcion.findByNombre(descripcion.getTexto()) != null){ //si la descripcion que se quiere añadir está en la bd
+            Descripcion dAux = Descripcion.findByNombre(descripcion.getTexto()); //se guarda
+            descripcion.setId(dAux.getId()); //se guarda la id
+            receta.setDescripcion(descripcion); //se añade a la receta
+        }else{ //si no esta en la bd
+            receta.setDescripcion(descripcion); //se añade a la receta
+            descripcion.save(); //se guarda
         }
 
         for(Ingrediente ingrediente: ingredientes){
             if(Ingrediente.findByNombre(ingrediente.getNombre()) != null){ //si el ingrediente que se quiere añadir está en la bd
-
                 Ingrediente iAux = Ingrediente.findByNombre(ingrediente.getNombre()); //se guarda
                 ingrediente.setId(iAux.getId()); //se guarda la id
-                rf.addIngrediente(ingrediente); //se añade a la receta
+                receta.addIngrediente(ingrediente); //se añade a la receta
             }else{ //si no esta en la bd
-                rf.addIngrediente(ingrediente); //se añade a la receta
                 ingrediente.save(); //se guarda
+                receta.addIngrediente(ingrediente); //se añade a la receta
             }
         }
 
-        rf.setId(rAux.getId()); //se guarda id de receta
-        rf.update(); //se actualiza receta
-        return Results.ok(toJson(rf));
+        receta.setId(rAux.getId()); //se guarda id de receta
+        receta.update(); //se actualiza receta
+        return Results.ok(toJson(receta));
     }
 
     public static JsonNode toJson(Receta receta) {

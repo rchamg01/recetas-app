@@ -46,7 +46,7 @@ public class DescripcionController extends Controller {
             return Results.status(404);
         }
 
-        descripcion.update(); //se actualiza ingrdiente
+        descripcion.update(); //se actualiza descripcion
         return ok(toJson(descripcion));
 
     }

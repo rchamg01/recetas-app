@@ -55,7 +55,7 @@ public class Descripcion extends Model {
     }
 
     public static Descripcion findByNombre(String texto) {
-        return find.query().where().icontains("texto", texto).findOne();
+        return find.query().where().contains("texto", texto).findOne();
     }
 
     public static Descripcion findById(Long id) {
