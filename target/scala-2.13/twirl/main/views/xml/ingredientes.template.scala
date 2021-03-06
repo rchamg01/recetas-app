@@ -50,7 +50,7 @@ Seq[Any](format.raw/*1.35*/("""
 
               /*
                   -- GENERATED --
-                  DATE: 2021-01-31T14:05:26.331
+                  DATE: 2021-02-23T17:35:54.778
                   SOURCE: E:/universidad/MASTER/cloud/recetas-app/app/views/ingredientes.scala.xml
                   HASH: 00dc9d5d973198faf3f0865dc37c84a146d82bd9
                   MATRIX: 919->1|1046->34|1074->36|1120->57|1157->79|1195->80|1232->91|1266->105|1302->112|1330->114

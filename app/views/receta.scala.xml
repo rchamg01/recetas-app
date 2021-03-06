@@ -1,10 +1,11 @@
-@(receta: Receta, ingredientes: List[Ingrediente])
+@(receta: Receta)
 <receta>
     <nombre>@receta.getNombre</nombre>
     <tiempo>@receta.getTiempo</tiempo>
     <tipo>@receta.getTipo</tipo>
-    @for(u <- ingredientes) {
-    @ingrediente(u)
-    }
+    @_usuario(receta.getUsuario)
+    @descripcion(receta.getDescripcion)
+
+    @ingredientes(receta.getIngredientes)
 
 </receta>

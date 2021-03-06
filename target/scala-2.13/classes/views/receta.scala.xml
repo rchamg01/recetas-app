@@ -1,9 +1,0 @@
-@(receta: Receta, ingredientes: List[Ingrediente])
-<receta>
-    <nombre>@receta.getNombre</nombre>
-    <tiempo>@receta.getTiempo</tiempo>
-    @for(u <- ingredientes) {
-    @ingrediente(u)
-    }
-
-</receta>

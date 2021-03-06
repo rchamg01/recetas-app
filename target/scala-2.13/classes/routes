@@ -2,22 +2,29 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# An example controller showing a sample home page
-
 POST    /recetas                            controllers.RecetasController.create(request: Request)
+
 GET     /recetas/search/tipo/:tipo          controllers.RecetasController.getRecetaTipo(request: Request, tipo: String)
 GET     /recetas/search/tiempo/:tiempo      controllers.RecetasController.getRecetaTiempo(request: Request, tiempo: String)
 GET     /recetas/search/nombre/:nombre      controllers.RecetasController.getRecetaNombre(request: Request, nombre: String)
 GET     /recetas/search/id/:id              controllers.RecetasController.getRecetaId(request: Request, id: Long)
-#GET     /recetas/search/ingrediente/id/:id  controllers.RecetasController.getRecetaIngrediente(request: Request, id: Long)
-#falta hacer get recetas con x ingrediente
+GET     /recetas/search/ingrediente/id/:id  controllers.RecetasController.getRecetaIngredienteId(request: Request, id: Long)
+GET     /recetas/search/usuario/id/:id      controllers.RecetasController.getRecetaUsuarioId(request: Request, id: Long)
 GET     /recetas/list                       controllers.RecetasController.getListaRecetas(request: Request)
-GET     /ingredientes/search/id/:id         controllers.RecetasController.getIngredienteId(request: Request, id: Long)
-GET     /ingredientes/search/nombre/:nombre controllers.RecetasController.getIngredienteNombre(request: Request, nombre: String)
+
+GET     /ingredientes/search/id/:id         controllers.IngredientesController.getIngredienteId(request: Request, id: Long)
+GET     /ingredientes/search/nombre/:nombre controllers.IngredientesController.getIngredienteNombre(request: Request, nombre: String)
+
+GET     /usuarios/search/id/:id             controllers.UsuariosController.getUsuarioId(request: Request, id: Long)
+GET     /usuarios/search/nombre/:nombre     controllers.UsuariosController.getUsuarioNombre(request: Request, nombre: String)
+
 PUT     /recetas/                           controllers.RecetasController.updateReceta(request: Request)
-PUT     /ingredientes/                      controllers.RecetasController.updateIngrediente(request: Request)
+PUT     /ingredientes/                      controllers.IngredientesController.updateIngrediente(request: Request)
+PUT     /usuarios/                          controllers.UsuariosController.updateUsuario(request: Request)
+PUT     /descripcion/                       controllers.DescripcionController.updateDescripcion(request: Request)
+
 DELETE  /recetas/:id                        controllers.RecetasController.deleteReceta(id: Long)
-#DELETE  /ingredientes/:id                  controllers.RecetasController.deleteIngrediente(id: Long)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)

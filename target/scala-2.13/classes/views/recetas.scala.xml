@@ -1,7 +1,0 @@
-@(recetas: List[Receta])
-<?xml version="1.0" encoding="utf-8" ?>
-<recetas>
-    @for(u <- recetas){
-        @receta(u,  u.getIngredientes())
-    }
-</recetas>

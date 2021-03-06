@@ -1,7 +1,6 @@
 package models;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
@@ -9,20 +8,17 @@ import play.data.validation.Constraints;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-//@JsonIgnoreProperties
-//@JsonSerialize
-//@JsonIdentityInfo(
-  //      generator = ObjectIdGenerators.PropertyGenerator.class,
-    //    property = "id")
 public class Ingrediente extends Model {
 
     @Id
     private Long id;
 
     @Constraints.Required
+    @NotBlank
     private String nombre;
 
     @ManyToMany(mappedBy = "ingredientes")
@@ -57,6 +53,9 @@ public class Ingrediente extends Model {
 
     public static Ingrediente findByNombre(String nombreIngrediente) {
         return find.query().where().icontains("nombre", nombreIngrediente).findOne();
+    }
+    public static List<Ingrediente> findListaByNombre(String nombreIngrediente) {
+        return find.query().where().icontains("nombre", nombreIngrediente).findList();
     }
 
     public static Ingrediente findById(Long id) {

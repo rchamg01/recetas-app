@@ -1,36 +1,39 @@
 package models;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@JsonIgnoreProperties
-//@JsonSerialize
-//@JsonIdentityInfo(
-  //      generator = ObjectIdGenerators.PropertyGenerator.class,
-    //    property = "id")
 public class Receta extends Model {
 
     @Id
     private Long id;
 
     @Constraints.Required
+    @NotBlank
     private String nombre;
 
+    @Digits(integer = 3,fraction = 0)
     @Constraints.Required
-    private String tiempo;
+    private String tiempo; //en minutos
 
     @Constraints.Required
     private String tipo; //tipo receta (vegano, vegetariano, omnivora?)
+
+    @OneToOne(cascade=CascadeType.ALL)
+    private Descripcion descripcion;
+
+    @ManyToOne
+    private Usuario usuario;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Ingrediente> ingredientes = new ArrayList<>();
@@ -101,6 +104,24 @@ public class Receta extends Model {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @JsonManagedReference(value = "usuario")
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    @JsonManagedReference(value = "descripcion")
+    public Descripcion getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(Descripcion descripcion) {
+        this.descripcion = descripcion;
     }
 
     public void addIngrediente(Ingrediente ingrediente) {

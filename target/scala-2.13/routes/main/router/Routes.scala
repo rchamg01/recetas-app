@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:E:/universidad/MASTER/cloud/recetas-app/conf/routes
-// @DATE:Sat Feb 20 01:41:47 CET 2021
+// @DATE:Sat Mar 06 01:21:08 CET 2021
 
 package router
 
@@ -14,25 +14,37 @@ import _root_.play.libs.F
 
 class Routes(
   override val errorHandler: play.api.http.HttpErrorHandler, 
-  // @LINE:7
+  // @LINE:5
   RecetasController_0: controllers.RecetasController,
-  // @LINE:23
-  Assets_1: controllers.Assets,
+  // @LINE:15
+  IngredientesController_1: controllers.IngredientesController,
+  // @LINE:18
+  UsuariosController_4: controllers.UsuariosController,
+  // @LINE:24
+  DescripcionController_3: controllers.DescripcionController,
+  // @LINE:30
+  Assets_2: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
 
    @javax.inject.Inject()
    def this(errorHandler: play.api.http.HttpErrorHandler,
-    // @LINE:7
+    // @LINE:5
     RecetasController_0: controllers.RecetasController,
-    // @LINE:23
-    Assets_1: controllers.Assets
-  ) = this(errorHandler, RecetasController_0, Assets_1, "/")
+    // @LINE:15
+    IngredientesController_1: controllers.IngredientesController,
+    // @LINE:18
+    UsuariosController_4: controllers.UsuariosController,
+    // @LINE:24
+    DescripcionController_3: controllers.DescripcionController,
+    // @LINE:30
+    Assets_2: controllers.Assets
+  ) = this(errorHandler, RecetasController_0, IngredientesController_1, UsuariosController_4, DescripcionController_3, Assets_2, "/")
 
   def withPrefix(addPrefix: String): Routes = {
     val prefix = play.api.routing.Router.concatPrefix(addPrefix, this.prefix)
     router.RoutesPrefix.setPrefix(prefix)
-    new Routes(errorHandler, RecetasController_0, Assets_1, prefix)
+    new Routes(errorHandler, RecetasController_0, IngredientesController_1, UsuariosController_4, DescripcionController_3, Assets_2, prefix)
   }
 
   private[this] val defaultPrefix: String = {
@@ -45,11 +57,17 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/search/tiempo/""" + "$" + """tiempo<[^/]+>""", """controllers.RecetasController.getRecetaTiempo(request:Request, tiempo:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/search/nombre/""" + "$" + """nombre<[^/]+>""", """controllers.RecetasController.getRecetaNombre(request:Request, nombre:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/search/id/""" + "$" + """id<[^/]+>""", """controllers.RecetasController.getRecetaId(request:Request, id:Long)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/search/ingrediente/id/""" + "$" + """id<[^/]+>""", """controllers.RecetasController.getRecetaIngredienteId(request:Request, id:Long)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/search/usuario/id/""" + "$" + """id<[^/]+>""", """controllers.RecetasController.getRecetaUsuarioId(request:Request, id:Long)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/list""", """controllers.RecetasController.getListaRecetas(request:Request)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/search/id/""" + "$" + """id<[^/]+>""", """controllers.RecetasController.getIngredienteId(request:Request, id:Long)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/search/nombre/""" + "$" + """nombre<[^/]+>""", """controllers.RecetasController.getIngredienteNombre(request:Request, nombre:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/search/id/""" + "$" + """id<[^/]+>""", """controllers.IngredientesController.getIngredienteId(request:Request, id:Long)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/search/nombre/""" + "$" + """nombre<[^/]+>""", """controllers.IngredientesController.getIngredienteNombre(request:Request, nombre:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """usuarios/search/id/""" + "$" + """id<[^/]+>""", """controllers.UsuariosController.getUsuarioId(request:Request, id:Long)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """usuarios/search/nombre/""" + "$" + """nombre<[^/]+>""", """controllers.UsuariosController.getUsuarioNombre(request:Request, nombre:String)"""),
     ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/""", """controllers.RecetasController.updateReceta(request:Request)"""),
-    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/""", """controllers.RecetasController.updateIngrediente(request:Request)"""),
+    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """ingredientes/""", """controllers.IngredientesController.updateIngrediente(request:Request)"""),
+    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """usuarios/""", """controllers.UsuariosController.updateUsuario(request:Request)"""),
+    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """descripcion/""", """controllers.DescripcionController.updateDescripcion(request:Request)"""),
     ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """recetas/""" + "$" + """id<[^/]+>""", """controllers.RecetasController.deleteReceta(id:Long)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
     Nil
@@ -59,7 +77,7 @@ class Routes(
   }}
 
 
-  // @LINE:7
+  // @LINE:5
   private[this] lazy val controllers_RecetasController_create0_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas")))
   )
@@ -79,7 +97,7 @@ class Routes(
     )
   )
 
-  // @LINE:8
+  // @LINE:7
   private[this] lazy val controllers_RecetasController_getRecetaTipo1_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/tipo/"), DynamicPart("tipo", """[^/]+""",true)))
   )
@@ -99,7 +117,7 @@ class Routes(
     )
   )
 
-  // @LINE:9
+  // @LINE:8
   private[this] lazy val controllers_RecetasController_getRecetaTiempo2_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/tiempo/"), DynamicPart("tiempo", """[^/]+""",true)))
   )
@@ -119,7 +137,7 @@ class Routes(
     )
   )
 
-  // @LINE:10
+  // @LINE:9
   private[this] lazy val controllers_RecetasController_getRecetaNombre3_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/nombre/"), DynamicPart("nombre", """[^/]+""",true)))
   )
@@ -139,7 +157,7 @@ class Routes(
     )
   )
 
-  // @LINE:11
+  // @LINE:10
   private[this] lazy val controllers_RecetasController_getRecetaId4_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/id/"), DynamicPart("id", """[^/]+""",true)))
   )
@@ -159,11 +177,51 @@ class Routes(
     )
   )
 
-  // @LINE:14
-  private[this] lazy val controllers_RecetasController_getListaRecetas5_route = Route("GET",
+  // @LINE:11
+  private[this] lazy val controllers_RecetasController_getRecetaIngredienteId5_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/ingrediente/id/"), DynamicPart("id", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_RecetasController_getRecetaIngredienteId5_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      RecetasController_0.getRecetaIngredienteId(fakeValue[play.mvc.Http.Request], fakeValue[Long]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.RecetasController",
+      "getRecetaIngredienteId",
+      Seq(classOf[play.mvc.Http.Request], classOf[Long]),
+      "GET",
+      this.prefix + """recetas/search/ingrediente/id/""" + "$" + """id<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:12
+  private[this] lazy val controllers_RecetasController_getRecetaUsuarioId6_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/search/usuario/id/"), DynamicPart("id", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_RecetasController_getRecetaUsuarioId6_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      RecetasController_0.getRecetaUsuarioId(fakeValue[play.mvc.Http.Request], fakeValue[Long]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.RecetasController",
+      "getRecetaUsuarioId",
+      Seq(classOf[play.mvc.Http.Request], classOf[Long]),
+      "GET",
+      this.prefix + """recetas/search/usuario/id/""" + "$" + """id<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:13
+  private[this] lazy val controllers_RecetasController_getListaRecetas7_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/list")))
   )
-  private[this] lazy val controllers_RecetasController_getListaRecetas5_invoker = createInvoker(
+  private[this] lazy val controllers_RecetasController_getListaRecetas7_invoker = createInvoker(
     
     (req:play.mvc.Http.Request) =>
       RecetasController_0.getListaRecetas(fakeValue[play.mvc.Http.Request]),
@@ -174,23 +232,22 @@ class Routes(
       Seq(classOf[play.mvc.Http.Request]),
       "GET",
       this.prefix + """recetas/list""",
-      """GET     /recetas/search/ingrediente/id/:id  controllers.RecetasController.getRecetaIngrediente(request: Request, id: Long)
-falta hacer get recetas con x ingrediente""",
+      """""",
       Seq()
     )
   )
 
   // @LINE:15
-  private[this] lazy val controllers_RecetasController_getIngredienteId6_route = Route("GET",
+  private[this] lazy val controllers_IngredientesController_getIngredienteId8_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("ingredientes/search/id/"), DynamicPart("id", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_RecetasController_getIngredienteId6_invoker = createInvoker(
+  private[this] lazy val controllers_IngredientesController_getIngredienteId8_invoker = createInvoker(
     
     (req:play.mvc.Http.Request) =>
-      RecetasController_0.getIngredienteId(fakeValue[play.mvc.Http.Request], fakeValue[Long]),
+      IngredientesController_1.getIngredienteId(fakeValue[play.mvc.Http.Request], fakeValue[Long]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
-      "controllers.RecetasController",
+      "controllers.IngredientesController",
       "getIngredienteId",
       Seq(classOf[play.mvc.Http.Request], classOf[Long]),
       "GET",
@@ -201,16 +258,16 @@ falta hacer get recetas con x ingrediente""",
   )
 
   // @LINE:16
-  private[this] lazy val controllers_RecetasController_getIngredienteNombre7_route = Route("GET",
+  private[this] lazy val controllers_IngredientesController_getIngredienteNombre9_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("ingredientes/search/nombre/"), DynamicPart("nombre", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_RecetasController_getIngredienteNombre7_invoker = createInvoker(
+  private[this] lazy val controllers_IngredientesController_getIngredienteNombre9_invoker = createInvoker(
     
     (req:play.mvc.Http.Request) =>
-      RecetasController_0.getIngredienteNombre(fakeValue[play.mvc.Http.Request], fakeValue[String]),
+      IngredientesController_1.getIngredienteNombre(fakeValue[play.mvc.Http.Request], fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
-      "controllers.RecetasController",
+      "controllers.IngredientesController",
       "getIngredienteNombre",
       Seq(classOf[play.mvc.Http.Request], classOf[String]),
       "GET",
@@ -220,11 +277,51 @@ falta hacer get recetas con x ingrediente""",
     )
   )
 
-  // @LINE:17
-  private[this] lazy val controllers_RecetasController_updateReceta8_route = Route("PUT",
+  // @LINE:18
+  private[this] lazy val controllers_UsuariosController_getUsuarioId10_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("usuarios/search/id/"), DynamicPart("id", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_UsuariosController_getUsuarioId10_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      UsuariosController_4.getUsuarioId(fakeValue[play.mvc.Http.Request], fakeValue[Long]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.UsuariosController",
+      "getUsuarioId",
+      Seq(classOf[play.mvc.Http.Request], classOf[Long]),
+      "GET",
+      this.prefix + """usuarios/search/id/""" + "$" + """id<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:19
+  private[this] lazy val controllers_UsuariosController_getUsuarioNombre11_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("usuarios/search/nombre/"), DynamicPart("nombre", """[^/]+""",true)))
+  )
+  private[this] lazy val controllers_UsuariosController_getUsuarioNombre11_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      UsuariosController_4.getUsuarioNombre(fakeValue[play.mvc.Http.Request], fakeValue[String]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.UsuariosController",
+      "getUsuarioNombre",
+      Seq(classOf[play.mvc.Http.Request], classOf[String]),
+      "GET",
+      this.prefix + """usuarios/search/nombre/""" + "$" + """nombre<[^/]+>""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:21
+  private[this] lazy val controllers_RecetasController_updateReceta12_route = Route("PUT",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/")))
   )
-  private[this] lazy val controllers_RecetasController_updateReceta8_invoker = createInvoker(
+  private[this] lazy val controllers_RecetasController_updateReceta12_invoker = createInvoker(
     
     (req:play.mvc.Http.Request) =>
       RecetasController_0.updateReceta(fakeValue[play.mvc.Http.Request]),
@@ -240,17 +337,17 @@ falta hacer get recetas con x ingrediente""",
     )
   )
 
-  // @LINE:18
-  private[this] lazy val controllers_RecetasController_updateIngrediente9_route = Route("PUT",
+  // @LINE:22
+  private[this] lazy val controllers_IngredientesController_updateIngrediente13_route = Route("PUT",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("ingredientes/")))
   )
-  private[this] lazy val controllers_RecetasController_updateIngrediente9_invoker = createInvoker(
+  private[this] lazy val controllers_IngredientesController_updateIngrediente13_invoker = createInvoker(
     
     (req:play.mvc.Http.Request) =>
-      RecetasController_0.updateIngrediente(fakeValue[play.mvc.Http.Request]),
+      IngredientesController_1.updateIngrediente(fakeValue[play.mvc.Http.Request]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
-      "controllers.RecetasController",
+      "controllers.IngredientesController",
       "updateIngrediente",
       Seq(classOf[play.mvc.Http.Request]),
       "PUT",
@@ -260,11 +357,51 @@ falta hacer get recetas con x ingrediente""",
     )
   )
 
-  // @LINE:19
-  private[this] lazy val controllers_RecetasController_deleteReceta10_route = Route("DELETE",
+  // @LINE:23
+  private[this] lazy val controllers_UsuariosController_updateUsuario14_route = Route("PUT",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("usuarios/")))
+  )
+  private[this] lazy val controllers_UsuariosController_updateUsuario14_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      UsuariosController_4.updateUsuario(fakeValue[play.mvc.Http.Request]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.UsuariosController",
+      "updateUsuario",
+      Seq(classOf[play.mvc.Http.Request]),
+      "PUT",
+      this.prefix + """usuarios/""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:24
+  private[this] lazy val controllers_DescripcionController_updateDescripcion15_route = Route("PUT",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("descripcion/")))
+  )
+  private[this] lazy val controllers_DescripcionController_updateDescripcion15_invoker = createInvoker(
+    
+    (req:play.mvc.Http.Request) =>
+      DescripcionController_3.updateDescripcion(fakeValue[play.mvc.Http.Request]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.DescripcionController",
+      "updateDescripcion",
+      Seq(classOf[play.mvc.Http.Request]),
+      "PUT",
+      this.prefix + """descripcion/""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:26
+  private[this] lazy val controllers_RecetasController_deleteReceta16_route = Route("DELETE",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("recetas/"), DynamicPart("id", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_RecetasController_deleteReceta10_invoker = createInvoker(
+  private[this] lazy val controllers_RecetasController_deleteReceta16_invoker = createInvoker(
     RecetasController_0.deleteReceta(fakeValue[Long]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -278,12 +415,12 @@ falta hacer get recetas con x ingrediente""",
     )
   )
 
-  // @LINE:23
-  private[this] lazy val controllers_Assets_versioned11_route = Route("GET",
+  // @LINE:30
+  private[this] lazy val controllers_Assets_versioned17_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
-  private[this] lazy val controllers_Assets_versioned11_invoker = createInvoker(
-    Assets_1.versioned(fakeValue[String], fakeValue[Asset]),
+  private[this] lazy val controllers_Assets_versioned17_invoker = createInvoker(
+    Assets_2.versioned(fakeValue[String], fakeValue[Asset]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.Assets",
@@ -299,86 +436,128 @@ falta hacer get recetas con x ingrediente""",
 
   def routes: PartialFunction[RequestHeader, Handler] = {
   
-    // @LINE:7
+    // @LINE:5
     case controllers_RecetasController_create0_route(params@_) =>
       call { 
         controllers_RecetasController_create0_invoker.call(
           req => RecetasController_0.create(req))
       }
   
-    // @LINE:8
+    // @LINE:7
     case controllers_RecetasController_getRecetaTipo1_route(params@_) =>
       call(params.fromPath[String]("tipo", None)) { (tipo) =>
         controllers_RecetasController_getRecetaTipo1_invoker.call(
           req => RecetasController_0.getRecetaTipo(req, tipo))
       }
   
-    // @LINE:9
+    // @LINE:8
     case controllers_RecetasController_getRecetaTiempo2_route(params@_) =>
       call(params.fromPath[String]("tiempo", None)) { (tiempo) =>
         controllers_RecetasController_getRecetaTiempo2_invoker.call(
           req => RecetasController_0.getRecetaTiempo(req, tiempo))
       }
   
-    // @LINE:10
+    // @LINE:9
     case controllers_RecetasController_getRecetaNombre3_route(params@_) =>
       call(params.fromPath[String]("nombre", None)) { (nombre) =>
         controllers_RecetasController_getRecetaNombre3_invoker.call(
           req => RecetasController_0.getRecetaNombre(req, nombre))
       }
   
-    // @LINE:11
+    // @LINE:10
     case controllers_RecetasController_getRecetaId4_route(params@_) =>
       call(params.fromPath[Long]("id", None)) { (id) =>
         controllers_RecetasController_getRecetaId4_invoker.call(
           req => RecetasController_0.getRecetaId(req, id))
       }
   
-    // @LINE:14
-    case controllers_RecetasController_getListaRecetas5_route(params@_) =>
+    // @LINE:11
+    case controllers_RecetasController_getRecetaIngredienteId5_route(params@_) =>
+      call(params.fromPath[Long]("id", None)) { (id) =>
+        controllers_RecetasController_getRecetaIngredienteId5_invoker.call(
+          req => RecetasController_0.getRecetaIngredienteId(req, id))
+      }
+  
+    // @LINE:12
+    case controllers_RecetasController_getRecetaUsuarioId6_route(params@_) =>
+      call(params.fromPath[Long]("id", None)) { (id) =>
+        controllers_RecetasController_getRecetaUsuarioId6_invoker.call(
+          req => RecetasController_0.getRecetaUsuarioId(req, id))
+      }
+  
+    // @LINE:13
+    case controllers_RecetasController_getListaRecetas7_route(params@_) =>
       call { 
-        controllers_RecetasController_getListaRecetas5_invoker.call(
+        controllers_RecetasController_getListaRecetas7_invoker.call(
           req => RecetasController_0.getListaRecetas(req))
       }
   
     // @LINE:15
-    case controllers_RecetasController_getIngredienteId6_route(params@_) =>
+    case controllers_IngredientesController_getIngredienteId8_route(params@_) =>
       call(params.fromPath[Long]("id", None)) { (id) =>
-        controllers_RecetasController_getIngredienteId6_invoker.call(
-          req => RecetasController_0.getIngredienteId(req, id))
+        controllers_IngredientesController_getIngredienteId8_invoker.call(
+          req => IngredientesController_1.getIngredienteId(req, id))
       }
   
     // @LINE:16
-    case controllers_RecetasController_getIngredienteNombre7_route(params@_) =>
+    case controllers_IngredientesController_getIngredienteNombre9_route(params@_) =>
       call(params.fromPath[String]("nombre", None)) { (nombre) =>
-        controllers_RecetasController_getIngredienteNombre7_invoker.call(
-          req => RecetasController_0.getIngredienteNombre(req, nombre))
-      }
-  
-    // @LINE:17
-    case controllers_RecetasController_updateReceta8_route(params@_) =>
-      call { 
-        controllers_RecetasController_updateReceta8_invoker.call(
-          req => RecetasController_0.updateReceta(req))
+        controllers_IngredientesController_getIngredienteNombre9_invoker.call(
+          req => IngredientesController_1.getIngredienteNombre(req, nombre))
       }
   
     // @LINE:18
-    case controllers_RecetasController_updateIngrediente9_route(params@_) =>
-      call { 
-        controllers_RecetasController_updateIngrediente9_invoker.call(
-          req => RecetasController_0.updateIngrediente(req))
+    case controllers_UsuariosController_getUsuarioId10_route(params@_) =>
+      call(params.fromPath[Long]("id", None)) { (id) =>
+        controllers_UsuariosController_getUsuarioId10_invoker.call(
+          req => UsuariosController_4.getUsuarioId(req, id))
       }
   
     // @LINE:19
-    case controllers_RecetasController_deleteReceta10_route(params@_) =>
-      call(params.fromPath[Long]("id", None)) { (id) =>
-        controllers_RecetasController_deleteReceta10_invoker.call(RecetasController_0.deleteReceta(id))
+    case controllers_UsuariosController_getUsuarioNombre11_route(params@_) =>
+      call(params.fromPath[String]("nombre", None)) { (nombre) =>
+        controllers_UsuariosController_getUsuarioNombre11_invoker.call(
+          req => UsuariosController_4.getUsuarioNombre(req, nombre))
+      }
+  
+    // @LINE:21
+    case controllers_RecetasController_updateReceta12_route(params@_) =>
+      call { 
+        controllers_RecetasController_updateReceta12_invoker.call(
+          req => RecetasController_0.updateReceta(req))
+      }
+  
+    // @LINE:22
+    case controllers_IngredientesController_updateIngrediente13_route(params@_) =>
+      call { 
+        controllers_IngredientesController_updateIngrediente13_invoker.call(
+          req => IngredientesController_1.updateIngrediente(req))
       }
   
     // @LINE:23
-    case controllers_Assets_versioned11_route(params@_) =>
+    case controllers_UsuariosController_updateUsuario14_route(params@_) =>
+      call { 
+        controllers_UsuariosController_updateUsuario14_invoker.call(
+          req => UsuariosController_4.updateUsuario(req))
+      }
+  
+    // @LINE:24
+    case controllers_DescripcionController_updateDescripcion15_route(params@_) =>
+      call { 
+        controllers_DescripcionController_updateDescripcion15_invoker.call(
+          req => DescripcionController_3.updateDescripcion(req))
+      }
+  
+    // @LINE:26
+    case controllers_RecetasController_deleteReceta16_route(params@_) =>
+      call(params.fromPath[Long]("id", None)) { (id) =>
+        controllers_RecetasController_deleteReceta16_invoker.call(RecetasController_0.deleteReceta(id))
+      }
+  
+    // @LINE:30
+    case controllers_Assets_versioned17_route(params@_) =>
       call(Param[String]("path", Right("/public")), params.fromPath[Asset]("file", None)) { (path, file) =>
-        controllers_Assets_versioned11_invoker.call(Assets_1.versioned(path, file))
+        controllers_Assets_versioned17_invoker.call(Assets_2.versioned(path, file))
       }
   }
 }

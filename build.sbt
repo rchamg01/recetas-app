@@ -1,4 +1,4 @@
-name := """play-java-hello-world-tutorial"""
+name := """recetas-app"""
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
@@ -12,7 +12,7 @@ libraryDependencies += guice
 enablePlugins(PlayEbean)
 libraryDependencies += evolutions
 libraryDependencies += jdbc
-
+//libraryDependencies += "org.postgresql" % "postgresql" % "42.1.4"
 libraryDependencies += "com.h2database" % "h2" % "1.4.200"
 libraryDependencies += "org.glassfish.jaxb" % "jaxb-core" % "2.3.0.1"
 libraryDependencies += "org.glassfish.jaxb" % "jaxb-runtime" % "2.3.2"

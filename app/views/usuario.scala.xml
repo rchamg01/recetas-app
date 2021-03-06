@@ -1,0 +1,4 @@
+@(u: Usuario)
+<usuario>
+    <nombre>@u.getNombre()</nombre>
+</usuario>

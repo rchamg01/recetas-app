@@ -1,0 +1,8 @@
+[debug] > Exec(reoad, None, None)
+[error] Not a valid command: reoad (similar: reload, bspReload, loadp)
+[error] Not a valid project ID: reoad (similar: root)
+[error] Expected ':'
+[error] Not a valid key: reoad (similar: playReload, onLoad, jseCommand)
+[error] reoad
+[error]      ^
+[debug] > Exec(idea-shell, None, None)
