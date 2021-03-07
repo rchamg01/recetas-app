@@ -1,7 +1,6 @@
 package models;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.ebean.Finder;
 import io.ebean.Model;
 import play.data.validation.Constraints;
@@ -15,6 +14,8 @@ import java.util.List;
 @Entity
 public class Receta extends Model {
 
+    public static final Finder<Long, Receta> find = new Finder<>(Receta.class);
+
     @Id
     private Long id;
 
@@ -22,14 +23,14 @@ public class Receta extends Model {
     @NotBlank
     private String nombre;
 
-    @Digits(integer = 3,fraction = 0)
+    @Digits(integer = 3, fraction = 0)
     @Constraints.Required
     private String tiempo; //en minutos
 
     @Constraints.Required
-    private String tipo; //tipo receta (vegano, vegetariano, omnivora?)
+    private String tipo; //tipo receta (vegano, vegetariano, omnivora)
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Descripcion descripcion;
 
     @ManyToOne
@@ -38,10 +39,9 @@ public class Receta extends Model {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Ingrediente> ingredientes = new ArrayList<>();
 
-    public static final Finder<Long, Receta> find = new Finder<>(Receta.class);
 
-
-    public Receta() {}
+    public Receta() {
+    }
 
     public static Receta findById(long id) {
         return find.byId(id);
@@ -75,12 +75,14 @@ public class Receta extends Model {
         return this.ingredientes.get(index);
     }
 
+    @JsonManagedReference
+    public List<Ingrediente> getIngredientes() {
+        return this.ingredientes;
+    }
+
     public void setIngredientes(List<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
-
-    @JsonManagedReference
-    public List<Ingrediente> getIngredientes() { return this.ingredientes; }
 
     public String getNombre() {
         return this.nombre;

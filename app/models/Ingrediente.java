@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 public class Ingrediente extends Model {
 
+    public static final Finder<Long, Ingrediente> find = new Finder<>(Ingrediente.class);
+
     @Id
     private Long id;
 
@@ -22,9 +24,19 @@ public class Ingrediente extends Model {
     private String nombre;
 
     @ManyToMany(mappedBy = "ingredientes")
-    private List<Receta> listaRecetas; //relacion mn
+    private List<Receta> listaRecetas;
 
-    public static final Finder<Long, Ingrediente> find = new Finder<>(Ingrediente.class);
+    public static Ingrediente findByNombre(String nombreIngrediente) {
+        return find.query().where().icontains("nombre", nombreIngrediente).findOne();
+    }
+
+    public static List<Ingrediente> findListaByNombre(String nombreIngrediente) {
+        return find.query().where().icontains("nombre", nombreIngrediente).findList();
+    }
+
+    public static Ingrediente findById(Long id) {
+        return find.byId(id);
+    }
 
     public String getNombre() {
         return nombre;
@@ -49,17 +61,6 @@ public class Ingrediente extends Model {
 
     public void setRecetas(List<Receta> recetas) {
         this.listaRecetas = recetas;
-    }
-
-    public static Ingrediente findByNombre(String nombreIngrediente) {
-        return find.query().where().icontains("nombre", nombreIngrediente).findOne();
-    }
-    public static List<Ingrediente> findListaByNombre(String nombreIngrediente) {
-        return find.query().where().icontains("nombre", nombreIngrediente).findList();
-    }
-
-    public static Ingrediente findById(Long id) {
-        return find.byId(id);
     }
 
 }

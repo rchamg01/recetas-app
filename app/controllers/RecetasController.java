@@ -27,6 +27,20 @@ public class RecetasController extends Controller {
     @Inject
     FormFactory formFactory;
 
+    public static JsonNode toJson(Receta receta) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode recetaNode = mapper.valueToTree(receta);
+        return mapper.createObjectNode().set("receta", recetaNode);
+    }
+
+    public static JsonNode toJson(List<Receta> recetas) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = Json.newObject();
+        ArrayNode recetasNode = mapper.valueToTree(recetas);
+        result.putArray("recetas").addAll(recetasNode);
+        return result;
+    }
+
     public Result create(Http.Request request) {
 
         /* ----JSON------
@@ -81,13 +95,14 @@ public class RecetasController extends Controller {
 
 
         Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
+        ObjectNode res = Json.newObject();
 
-        if(form.hasErrors()){
+        if (form.hasErrors()) {
             return Results.badRequest(form.errorsAsJson());
         } else {
 
             Receta rAux = form.get(); //se crea una receta donde se recoge los datos de la request
-            List<Ingrediente> iAux = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
+            List<Ingrediente> ingredientes = rAux.getIngredientes(); //se copian a una lista los ingredientes de la request
             Usuario usuario = rAux.getUsuario();
             Descripcion descripcion = rAux.getDescripcion();
             Receta receta = new Receta(); //se crea nueva receta vacia donde se guardaran los datos bien compuestos
@@ -97,34 +112,38 @@ public class RecetasController extends Controller {
             receta.setTiempo(rAux.getTiempo());
             receta.setTipo(rAux.getTipo());
 
-            if(Usuario.findByNombre(usuario.getNombre()) == null){ //no esta en la bd
+            if (Usuario.findByNombre(usuario.getNombre()) == null) { //no esta en la bd
                 receta.setUsuario(rAux.getUsuario());
                 usuario.save();
-            }else{ //está en la bd
+            } else { //está en la bd
                 Usuario uAux = Usuario.findByNombre(usuario.getNombre());
                 receta.setUsuario(uAux);
             }
 
-            receta.setDescripcion(rAux.getDescripcion());
-            descripcion.save();
+            if (Descripcion.findByNombre(descripcion.getTexto()) == null) { //no esta en la bd
+                receta.setDescripcion(rAux.getDescripcion());
+                descripcion.save();
+            } else { //está en la bd
+                res.put("success", false).put("message", "La descripción ya existe en la BD, debe ser única.");
+                return status(409).sendJson(res); //conflicto
+            }
 
-            for(Ingrediente ingrediente: iAux){
-                if(Ingrediente.findByNombre(ingrediente.getNombre()) == null){ //no existe en la bd
+            for (Ingrediente ingrediente : ingredientes) { //se recorre la lista de ingredientes
+                if (Ingrediente.findByNombre(ingrediente.getNombre()) == null) { //no existe en la bd
                     ingrediente.save();
                     receta.addIngrediente(ingrediente);
-                }else{ //si esta
-                    Ingrediente ingredienteAux = Ingrediente.findByNombre(ingrediente.getNombre());
-                    receta.addIngrediente(ingredienteAux);
+                } else { //si esta
+                    Ingrediente iAux = Ingrediente.findByNombre(ingrediente.getNombre());
+                    receta.addIngrediente(iAux);
                 }
             }
             receta.save(); //se guarda la receta en la base de datos
         }
 
-        ObjectNode node = Json.newObject();
-        node.put("success", true);
-        node.put("message", "La receta ha sido añadida");
 
-        return Results.ok(node);
+        res.put("success", true).put("message", "La receta ha sido añadida");
+
+        return Results.ok(res);
 
     }
 
@@ -133,7 +152,7 @@ public class RecetasController extends Controller {
         List<Receta> recetas = Receta.findByName(nombre);
         ObjectNode res = Json.newObject();
 
-        if(recetas.isEmpty()) {
+        if (recetas.isEmpty()) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -142,7 +161,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = toJson(recetas);
             return ok(node);
@@ -159,7 +178,7 @@ public class RecetasController extends Controller {
         Receta receta = Receta.findById(id);
         ObjectNode res = Json.newObject();
 
-        if(receta == null) {
+        if (receta == null) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -168,7 +187,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.receta.render(receta));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
             JsonNode node = toJson(receta);
             return ok(node);
         }
@@ -177,13 +196,12 @@ public class RecetasController extends Controller {
 
     }
 
-
     public Result getRecetaTiempo(Http.Request request, String tiempo) {
 
         List<Receta> recetas = Receta.findByTime(tiempo);
         ObjectNode res = Json.newObject();
 
-        if(recetas.isEmpty()) {
+        if (recetas.isEmpty()) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -192,7 +210,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = toJson(recetas);
             return ok(node);
@@ -208,7 +226,7 @@ public class RecetasController extends Controller {
         List<Receta> recetas = Receta.findByTipo(tipo);
         ObjectNode res = Json.newObject();
 
-        if(recetas.isEmpty()) {
+        if (recetas.isEmpty()) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -217,7 +235,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = toJson(recetas);
             return ok(node);
@@ -234,7 +252,7 @@ public class RecetasController extends Controller {
         Ingrediente ingrediente = Ingrediente.findById(id);
         ObjectNode res = Json.newObject();
 
-        if(ingrediente == null) {
+        if (ingrediente == null) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -245,7 +263,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
             JsonNode node = toJson(recetas);
             return ok(node);
         }
@@ -260,7 +278,7 @@ public class RecetasController extends Controller {
         Usuario usuario = Usuario.findById(id);
         ObjectNode res = Json.newObject();
 
-        if(usuario == null) {
+        if (usuario == null) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -271,7 +289,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
             JsonNode node = toJson(recetas);
             return ok(node);
         }
@@ -286,7 +304,7 @@ public class RecetasController extends Controller {
         List<Receta> recetas = Receta.findAll();
         ObjectNode res = Json.newObject();
 
-        if(recetas.isEmpty()) {
+        if (recetas.isEmpty()) {
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -295,7 +313,7 @@ public class RecetasController extends Controller {
 
             return ok(views.xml.recetas.render(recetas));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = toJson(recetas);
             return ok(node);
@@ -315,7 +333,7 @@ public class RecetasController extends Controller {
         if (receta == null) { //si no existe (la busqueda devolvio null)
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
-        }else{
+        } else {
             System.out.println("Receta " + id + " eliminada");
             receta.delete();
             res.put("success", true).put("message", "Receta eliminada correctamente.");
@@ -329,17 +347,17 @@ public class RecetasController extends Controller {
         Form<Receta> form = formFactory.form(Receta.class).bindFromRequest(request);
         ObjectNode res = Json.newObject();
 
-        if(form.hasErrors()){
+        if (form.hasErrors()) {
             return Results.badRequest(form.errorsAsJson());
         }
 
         Receta rAux = form.get();
-        if(rAux.getId() == null){
+        if (rAux.getId() == null) {
             res.put("success", false).put("message", "Es necesario indicar el id de la receta");
             return status(409).sendJson(res); //conflicto
         }
 
-        if(Receta.findById(rAux.getId()) == null){ //si no existe en la bd
+        if (Receta.findById(rAux.getId()) == null) { //si no existe en la bd
             res.put("success", false).put("message", "Receta no encontrada");
             return status(404).sendJson(res); //not found
         }
@@ -347,36 +365,35 @@ public class RecetasController extends Controller {
         List<Ingrediente> ingredientes = rAux.getIngredientes();
         Usuario usuario = rAux.getUsuario();
         Descripcion descripcion = rAux.getDescripcion();
-        Receta receta =  new Receta();
+        Receta receta = new Receta();
 
         receta.setNombre(rAux.getNombre());
         receta.setTiempo(rAux.getTiempo());
         receta.setTipo(rAux.getTipo());
 
-        if(Usuario.findByNombre(usuario.getNombre()) != null){ //si el usuario que se quiere añadir está en la bd
-            Usuario uAux = Usuario.findByNombre(usuario.getNombre()); //se guarda
+        if (Usuario.findByNombreE(usuario.getNombre()) != null) { //si el usuario que se quiere añadir está en la bd
+            Usuario uAux = Usuario.findByNombreE(usuario.getNombre()); //se guarda
             usuario.setId(uAux.getId()); //se guarda la id
             receta.setUsuario(usuario); //se añade a la receta
-        }else{ //si no esta en la bd
+        } else { //si no esta en la bd
             receta.setUsuario(usuario); //se añade a la receta
             usuario.save(); //se guarda
         }
 
-        if(Descripcion.findByNombre(descripcion.getTexto()) != null){ //si la descripcion que se quiere añadir está en la bd
-            Descripcion dAux = Descripcion.findByNombre(descripcion.getTexto()); //se guarda
-            descripcion.setId(dAux.getId()); //se guarda la id
-            receta.setDescripcion(descripcion); //se añade a la receta
-        }else{ //si no esta en la bd
+        if (Descripcion.findByNombre(descripcion.getTexto()) != null) { //si la descripcion que se quiere añadir está en la bd
+            Descripcion dAux = Descripcion.findByNombre(descripcion.getTexto());
+            receta.setDescripcion(dAux);
+        } else { //si no esta en la bd
             receta.setDescripcion(descripcion); //se añade a la receta
             descripcion.save(); //se guarda
         }
 
-        for(Ingrediente ingrediente: ingredientes){
-            if(Ingrediente.findByNombre(ingrediente.getNombre()) != null){ //si el ingrediente que se quiere añadir está en la bd
+        for (Ingrediente ingrediente : ingredientes) {
+            if (Ingrediente.findByNombre(ingrediente.getNombre()) != null) { //si el ingrediente que se quiere añadir está en la bd
                 Ingrediente iAux = Ingrediente.findByNombre(ingrediente.getNombre()); //se guarda
                 ingrediente.setId(iAux.getId()); //se guarda la id
                 receta.addIngrediente(ingrediente); //se añade a la receta
-            }else{ //si no esta en la bd
+            } else { //si no esta en la bd
                 ingrediente.save(); //se guarda
                 receta.addIngrediente(ingrediente); //se añade a la receta
             }
@@ -385,20 +402,6 @@ public class RecetasController extends Controller {
         receta.setId(rAux.getId()); //se guarda id de receta
         receta.update(); //se actualiza receta
         return Results.ok(toJson(receta));
-    }
-
-    public static JsonNode toJson(Receta receta) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode recetaNode = mapper.valueToTree(receta);
-        return mapper.createObjectNode().set("receta", recetaNode);
-    }
-
-    public static JsonNode toJson(List<Receta> recetas) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = Json.newObject();
-        ArrayNode recetasNode = mapper.valueToTree(recetas);
-        result.putArray("recetas").addAll(recetasNode);
-        return result;
     }
 
 }

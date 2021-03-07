@@ -304,28 +304,23 @@ java_version_check() {
 usage() {
  cat <<EOM
 Usage: $script_name [options]
-
   -h | -help         print this message
   -v | -verbose      this runner is chattier
   -d | -debug        enable debug output for the launcher script
   -no-version-check  Don't run the java version check.
   -main <classname>  Define a custom main class
   -jvm-debug <port>  Turn on JVM debugging, open at the given port.
-
   # java version (default: java from PATH, currently $(java -version 2>&1 | grep version))
   -java-home <path>         alternate JAVA_HOME
-
   # jvm options and output control
   JAVA_OPTS          environment variable, if unset uses "$java_opts"
   -Dkey=val          pass -Dkey=val directly to the java runtime
   -J-X               pass option -X directly to the java runtime
                      (-J is stripped)
-
   # special option
   --                 To stop parsing built-in commands from the rest of the command-line.
                      e.g.) enabling debug and sending -d as app argument
                      \$ ./start-script -d -- -d
-
 In the case of duplicated or conflicting options, basically the order above
 shows precedence: JAVA_OPTS lowest, command line options highest except "--".
 Available main classes:
@@ -357,4 +352,4 @@ declare java_cmd=$(get_java_cmd)
 # if configuration files exist, prepend their contents to $@ so it can be processed by this runner
 [[ -f "$script_conf_file" ]] && set -- $(loadConfigFile "$script_conf_file") "$@"
 
-run "$@"
+run "$@

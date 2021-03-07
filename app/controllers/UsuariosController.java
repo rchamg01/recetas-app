@@ -21,12 +21,26 @@ public class UsuariosController extends Controller {
     @Inject
     FormFactory formFactory;
 
+    public static JsonNode toJson(Usuario usuario) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode usuarioNode = mapper.valueToTree(usuario);
+        return mapper.createObjectNode().set("usuario", usuarioNode);
+    }
+
+    public static JsonNode usuariosToJson(List<Usuario> usuarios) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = Json.newObject();
+        ArrayNode usuariosNode = mapper.valueToTree(usuarios);
+        result.putArray("usuarios").addAll(usuariosNode);
+        return result;
+    }
+
     public Result getUsuarioNombre(Http.Request request, String nombre) {
 
         List<Usuario> usuarios = Usuario.findListaByNombre(nombre);
         ObjectNode res = Json.newObject();
 
-        if(usuarios.isEmpty()) {
+        if (usuarios.isEmpty()) {
             res.put("success", false).put("message", "Usuario no encontrado");
             return status(404).sendJson(res); //not found
         }
@@ -35,7 +49,7 @@ public class UsuariosController extends Controller {
 
             return ok(views.xml.usuarios.render(usuarios));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = usuariosToJson(usuarios);
             return ok(node);
@@ -51,7 +65,7 @@ public class UsuariosController extends Controller {
         Usuario usuario = Usuario.findById(id);
         ObjectNode res = Json.newObject();
 
-        if(usuario == null) {
+        if (usuario == null) {
             res.put("success", false).put("message", "Usuario no encontrado");
             return status(404).sendJson(res); //not found
         }
@@ -60,7 +74,7 @@ public class UsuariosController extends Controller {
 
             return ok(views.xml._usuario.render(usuario));
 
-        }else if (request.accepts("application/json")) {
+        } else if (request.accepts("application/json")) {
 
             JsonNode node = toJson(usuario);
             return ok(node);
@@ -76,17 +90,17 @@ public class UsuariosController extends Controller {
         Form<Usuario> form = formFactory.form(Usuario.class).bindFromRequest(request);
         ObjectNode res = Json.newObject();
 
-        if(form.hasErrors()){
+        if (form.hasErrors()) {
             return Results.badRequest(form.errorsAsJson());
         }
 
         Usuario usuario = form.get();
-        if(usuario.getId() == null){
+        if (usuario.getId() == null) {
             res.put("success", false).put("message", "Es necesario indicar el id del usuario");
             return status(409).sendJson(res); //conflicto
         }
 
-        if(Usuario.findById(usuario.getId()) == null){ //si no existe en la bd
+        if (Usuario.findById(usuario.getId()) == null) { //si no existe en la bd
             res.put("success", false).put("message", "Usuario no encontrado");
             return status(404).sendJson(res); //not found
         }
@@ -94,20 +108,6 @@ public class UsuariosController extends Controller {
         usuario.update(); //se actualiza usuario
         return ok(toJson(usuario));
 
-    }
-
-    public static JsonNode toJson(Usuario usuario) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode usuarioNode = mapper.valueToTree(usuario);
-        return mapper.createObjectNode().set("usuario", usuarioNode);
-    }
-
-    public static JsonNode usuariosToJson(List<Usuario> usuarios) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode result = Json.newObject();
-        ArrayNode usuariosNode = mapper.valueToTree(usuarios);
-        result.putArray("usuarios").addAll(usuariosNode);
-        return result;
     }
 
 

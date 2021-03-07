@@ -16,18 +16,24 @@ public class Descripcion extends Model {
 
     public static final Finder<Long, Descripcion> find = new Finder<>(Descripcion.class);
 
-
-
     @Id
     private Long id;
 
-    @OneToOne(mappedBy="descripcion")
+    @OneToOne(mappedBy = "descripcion")
     @Valid
     private Receta receta;
 
     @Constraints.Required
     @NotBlank
     private String texto;
+
+    public static Descripcion findByNombre(String texto) {
+        return find.query().where().eq("texto", texto).findOne();
+    }
+
+    public static Descripcion findById(Long id) {
+        return find.byId(id);
+    }
 
     public String getTexto() {
         return texto;
@@ -52,14 +58,6 @@ public class Descripcion extends Model {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public static Descripcion findByNombre(String texto) {
-        return find.query().where().contains("texto", texto).findOne();
-    }
-
-    public static Descripcion findById(Long id) {
-        return find.byId(id);
     }
 
 }
