@@ -11,7 +11,7 @@ sbt run
 ⚠️ La base de datos es H2 por lo que es local.
 
 Las peticiones a la app se realizarán desde: http://localhost:9000. Con la ruta y el verbo correspondiente.
-
+También se pueden hacer peticiones desde http://ec2-3-120-139-220.eu-central-1.compute.amazonaws.com sin tener que ejecutar esta aplicación.
 ## Peticiones receta
 ### Crear receta: `POST`
 Para crear una receta se debe hacer una peticion `POST` a http://localhost:9000/recetas con el siguiente cuerpo **JSON**:
